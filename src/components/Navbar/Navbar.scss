@@ -1,0 +1,179 @@
+@import "../Variables/Variables.scss";
+
+.nav-bar{
+    height: 80px;
+    margin: 0px 20px;
+    @include justifySpaceBetween();
+    border-bottom: 1px solid gainsboro;
+    margin-bottom: 15px;
+    .left{
+        @include alignItemCenter();
+        width: 30%;
+        .menu-icon{
+            font-size: 30px;
+            margin-right: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        .menu-icon-clicked{
+            @extend .menu-icon;
+            background-color: #AA336A;
+            color: white;
+            border-radius: 8px;
+        }
+        .calendar-icon{
+            font-size: 32px;
+            margin-right: 10px;
+        }
+        span{
+            font-size: 34px;
+        }
+    }
+    .centre{
+        display: flex;
+        margin-left: 15%;
+        width: 40%;
+        column-gap: 20px;
+        .today{
+            position: relative;
+            @include makeItemCentre();
+            .today-hide{
+               @include tool-tip();
+            }
+            &:hover .today-hide{
+                visibility: visible;
+            }
+            &:hover .today-button{
+                background-color: #F0F0F0;
+            }
+        }
+        .prev-day{
+            position: relative;
+            @include makeItemCentre();
+            .prev-day-hide{
+               @include tool-tip();
+            }
+            &:hover .prev-day-hide{
+                visibility: visible;
+            }
+            .prev-day-icon{
+                @include tool-tip-icon();
+                cursor: pointer;
+            }
+            &:hover .prev-day-icon{
+                background-color: #F0F0F0;
+            }
+        }
+        .next-day{
+            position: relative;
+            @include makeItemCentre();
+            .next-day-hide{
+               @include tool-tip();
+            }
+            &:hover .next-day-hide{
+                visibility: visible;
+            }
+            .next-day-icon{
+                @include tool-tip-icon();
+                @include makeItemCentre();
+                cursor: pointer;
+            }
+            &:hover .next-day-icon{
+                background-color: #F0F0F0;
+            }
+        }
+        .date{
+            @include makeItemCentre();
+            position: relative;
+            padding: 2px;
+            .date-cal{
+                position: absolute;
+                top: -20px;
+                left: 0px;
+                z-index: 3;
+                .cal{
+                    border: 1px solid gainsboro;
+                    width: 300px;
+                    height: 250px;
+                    font-size: 10px;
+                    box-sizing: border-box;
+                    box-shadow: 0px 2px 7px grey;
+                    border-radius: 4px;
+                }
+                .rdrMonthAndYearWrapper{
+                    height: 35px;
+                    padding-top: 3px;
+                }
+                .rdrMonthAndYearPickers select{
+                    color: black;
+                    font-size: larger;
+                }
+                .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
+                    color: #696969
+                }
+                .rdrDayStartPreview, .rdrDayEndPreview{
+                    border: none !important;
+                }
+                .rdrDayToday .rdrDayNumber span:after{
+                    background: #FF1493;
+                }
+                .rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after {
+                    background: #fff;
+                } 
+            }
+        }
+        .new-date{
+            @extend .date;
+            cursor: pointer;
+            &:hover{
+                background-color: #F0F0F0;
+            }
+        }
+    }
+    .right{
+        @include justifyItemFlexEnd();           
+        width: 30%;
+        position: relative;
+        button{
+            margin-right: 15px;
+            &:hover{
+                background-color: #F0F0F0;
+            }    
+        }
+        .user-selected{
+            position: absolute;
+            top: 55px;
+            right: 45px;
+            background-color: white;
+            border: 1px solid gainsboro;
+            font-size: 16px;
+            z-index: 2;
+            div{
+                padding: 10px 45px 10px 10px;
+                cursor: pointer;
+                &:hover{
+                     background-color: whitesmoke;
+                }
+            }
+        }
+        .profile{
+            position: relative;
+            .profile-image{
+                vertical-align: middle;
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                border: solid 2px transparent;
+                background-image: linear-gradient(360deg, #9c20aa, #fb3570);
+                cursor: pointer;
+            }
+            .profile-hide{
+                @include tool-tip();
+                right: 10%
+            }
+            &:hover .profile-hide{
+                visibility: visible;
+            }
+        }
+    }
+}

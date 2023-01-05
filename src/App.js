@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, createContext} from "react";
+import Navbar from "./components/Navbar/Navbar";
+import Widget from "./components/Widget/Widget";
+
+export const DateContext = createContext();
 
 function App() {
+  const [date, setDate] = useState(new Date());
+
+  const [isMenuClicked, setIsMenuClicked] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DateContext.Provider value={{date, setDate, isMenuClicked}}>
+      <Navbar  setIsMenuClicked={setIsMenuClicked}/>
+      <Widget />
+    </DateContext.Provider>
   );
 }
 

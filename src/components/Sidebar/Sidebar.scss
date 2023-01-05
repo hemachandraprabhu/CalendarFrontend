@@ -1,0 +1,58 @@
+@import "../Variables/Variables.scss";
+
+.side-bar{
+    width: 20%;
+    margin-left: 20px;
+    position: fixed;
+    @include flexDirectionColumn();
+    transition: 0.6s ease-in-out;
+    transform: translateX(0px);
+    .side-bar-top{
+        .side-bar-create-button{
+            border-radius: 22px;
+            padding: 8px 18px;
+            .create-icon{
+                color: white;
+                background-color: 	#FF1493;
+                border-radius: 50%;
+                padding: 5px;
+            }
+            span{
+                margin: 0px 8px;
+            }
+        }
+        
+    }
+    .side-bar-bottom{
+        .rdrMonthAndYearWrapper{
+            height: 55px;
+            padding-top: 3px;
+        }
+        .rdrMonth{
+            width: 280px;
+        }
+        .rdrMonthAndYearPickers select{
+            color: black;
+            font-size: larger;
+        }
+        .rdrDayNumber span{
+            color: black
+        }
+        .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
+            color: #696969
+        }
+        .rdrDayStartPreview, .rdrDayEndPreview{
+            border: none !important;
+        }
+        .rdrDayToday .rdrDayNumber span:after{
+            background: #FF1493;
+        } 
+       
+    }
+}
+.hide-side-bar{
+    @extend .side-bar;
+    transition: 0.6s ease-in-out;
+    transform: translateX(-327px);
+}
+

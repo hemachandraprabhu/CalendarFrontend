@@ -1,0 +1,35 @@
+body{
+    margin: 0px 0px;
+    padding: 0% 0%;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    cursor: context-menu;
+}
+button{
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid gainsboro; 
+    background-color: white;  
+    display: flex;
+    align-items: center;  
+    padding: 8px 12px; 
+}
+
+// .rdrMonthAndYearPickers select{
+//     color: black;
+//     font-size: larger;
+// }
+// .rdrDayNumber span{
+//     color: black
+// }
+// .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
+//     color: #696969
+// }
+// .rdrDayStartPreview, .rdrDayEndPreview{
+//     border: none !important;
+// }
+// .rdrDayToday .rdrDayNumber span:after{
+//     background: #FF1493;
+// }

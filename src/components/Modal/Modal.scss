@@ -1,0 +1,107 @@
+@import "../Variables/Variables.scss";
+
+.modal-styles{
+    @include modalStyles();
+    padding: 30px;
+    height: 45vh;
+    .modal-header{
+        text-align: right;
+        background-color: lightgrey
+    }
+    .title{
+        @include makeItemCentre();
+        height: 10%;
+        .title-input{
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 28px;
+            border-bottom: 2px solid #AA336A;
+        }
+    }
+    .dt{
+        @include flexDirectionColumn();
+        height: 90%;
+        .date{
+            margin-top: 8%;
+            font-size: 18px;
+            .set-date{
+                cursor: pointer;
+            }
+        }
+        .select-date{
+            position: fixed;
+            top: 62%;
+            left: 38%;
+            transform: translate(-50%, -50%);
+            background-color: #FFF;
+            padding: 1px;
+            z-index: 3;
+            border: 1px solid gainsboro;
+            width: 300px;
+            height: 250px;
+            font-size: 10px;
+            box-sizing: border-box;
+            box-shadow: 0px 2px 7px grey;
+            border-radius: 4px;
+        }
+        .rdrMonthAndYearWrapper{
+            height: 35px;
+            padding-top: 3px;
+        }
+        .rdrMonthAndYearPickers select{
+            color: black;
+            font-size: larger;
+        }
+        .rdrDayNumber span{
+            color: black
+        }
+        .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
+            color: #696969
+        }
+        .rdrDayStartPreview, .rdrDayEndPreview{
+            border: none !important;
+        }
+        .rdrDayToday .rdrDayNumber span:after{
+            background: #FF1493;
+        }
+        .rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after {
+            background: #fff;
+        } 
+        .time{
+            margin-top: 4%;
+            font-size: 18px;
+            @include flexDirectionColumn();
+            .choose-time{
+                display: flex;
+                column-gap: 15px;
+                .time-picker{
+                    .react-time-picker__wrapper{
+                        border: none;
+                    }
+                    .react-time-picker__button {
+                        display: none;
+                      }
+                }
+            }
+        }
+    }
+       
+    .modal-footer{
+            @include justifyItemFlexEnd();
+            column-gap: 20px;
+            height: 10%;
+            .modal-footer-close{
+                border: 1px solid #AA336A;;
+                color: #AA336A;;
+                padding: 6px 14px;
+            }
+            .modal-footer-save{
+                border: 1px solid #AA336A;;
+                background-color: #AA336A;;
+                color: white;
+                padding: 6px 14px;
+            }
+    }
+       
+}
