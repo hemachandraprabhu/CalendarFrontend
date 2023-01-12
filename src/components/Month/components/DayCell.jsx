@@ -43,13 +43,7 @@ export function DayCell({ date, events }) {
   }
 
   return (
-    <div
-      className="day-cell"
-      onClick={() => {
-        appContext.setIsModalOpen(true);
-        appContext.setDate(date);
-      }}
-    >
+    <div className="day-cell">
       <div className="day-cell__inner-wrap">
         <div className="day-cell-date">
           <span

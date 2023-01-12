@@ -1,6 +1,9 @@
 import React from "react";
 import moment from "moment";
-
+/**
+ * @param  {} props
+ * props contains the current time information 
+ */
 function CurrentTime(props) {
   if (
     moment(props.date).format("MMM Do YYYY") ===

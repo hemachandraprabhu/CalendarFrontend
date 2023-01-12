@@ -16,12 +16,26 @@ export default function Month() {
     1
   );
 
+  const lastDayOfMonth = new Date(
+    appContext.date.getFullYear(),
+    appContext.date.getMonth() + 1,
+    0
+  );
+
   const firstDayOnCalendar = addDays(
     firstDayOfMonth,
     firstDayOfMonth.getDay() * -1
   );
 
-  const totalWeeks = 6;
+  const lastDayOnCalendar = addDays(
+    lastDayOfMonth,
+    13 - lastDayOfMonth.getDay()
+  );
+
+  const totalDays =
+    (lastDayOnCalendar - firstDayOnCalendar) / (1000 * 60 * 60 * 24) + 1;
+
+  const totalWeeks = totalDays / 7;
   const weeks = [];
 
   let firstDayOfWeek = firstDayOnCalendar;

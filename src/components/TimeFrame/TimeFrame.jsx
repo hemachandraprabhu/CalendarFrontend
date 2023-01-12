@@ -9,11 +9,13 @@ import { Content } from "./components/Content";
 function TimeFrame() {
   const appContext = useContext(AppContext);
 
+  /* state to indicate the current time */
+  const [currTime, setCurrTime] = useState(moment().format());
+
+  /* sorting the events based on time*/
   var results = appContext.events.sort(
     (a, b) => new Date(a.startDate) - new Date(b.startDate)
   );
-
-  const [currTime, setCurrTime] = useState(moment().format());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -75,4 +77,3 @@ function TimeFrame() {
 }
 
 export default TimeFrame;
-

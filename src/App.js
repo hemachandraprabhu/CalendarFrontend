@@ -137,6 +137,7 @@ function App() {
         handleGet();
       })
       .catch(function (error) {
+        console.log(error);
         alert(error.message);
       });
   };

@@ -1,11 +1,11 @@
 import React from "react";
 import moment from "moment";
-
+/**
+ * @param  {} props
+ * props contains the event details for the choosen date
+ */
 export function Content(props) {
-  // console.log(
-  //   Math.floor(moment(props.item.endDate) - moment(props.item.startDate)) / 59e3
-  // );
-  
+
   return (
     <div
       onClick={() => {

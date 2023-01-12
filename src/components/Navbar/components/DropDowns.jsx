@@ -33,7 +33,7 @@ export function DropDowns(props) {
           }}
         >
           <div>{item.name}</div>
-          <div>{item.keyword}</div>
+          <div style={{color: "grey"}}>{item.keyword}</div>
         </div>
       ))}
     </div>
