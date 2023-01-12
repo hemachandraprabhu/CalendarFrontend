@@ -12,8 +12,8 @@ export function NavBarCentre(props) {
   const appContext = useContext(AppContext);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
+  /* to close the calendar when clicking on outside the calendar */
   let menuRef = useRef();
-
   useEffect(() => {
     let handler = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -23,14 +23,16 @@ export function NavBarCentre(props) {
     document.addEventListener("mousedown", handler);
   });
 
+  /* to update the date */
   const handleDays = (day) => {
-    let currDate = new Date(appContext.date.getTime());
+    let currDate = new Date(appContext.date);
     currDate.setDate(currDate.getDate() + day);
     appContext.setDate(currDate);
   };
 
+  /* to update the month */
   const handleMonths = (month) => {
-    let currDate = new Date(appContext.date.getTime());
+    let currDate = new Date(appContext.date);
     currDate.setDate(1);
     currDate.setMonth(currDate.getMonth() + month);
     appContext.setDate(currDate);

@@ -12,6 +12,7 @@ import { month } from "./Data";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BiPlusMedical } from "react-icons/bi";
 
+/*to pass the states globally as props*/
 export const AppContext = createContext();
 
 function App() {
@@ -61,7 +62,6 @@ function App() {
   useEffect(() => {
     handleGet();
   }, [getByUrl]);
-
 
   const getByIdUrl = `http://localhost:5169/api/appointments/`;
 

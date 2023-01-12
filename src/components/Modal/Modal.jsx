@@ -60,7 +60,7 @@ function Modal() {
           <div className="left">
             <b>
               {appContext.eventDetails === null
-                ? "Create the event"
+                ? "Create an event"
                 : "Update an event"}
             </b>
           </div>

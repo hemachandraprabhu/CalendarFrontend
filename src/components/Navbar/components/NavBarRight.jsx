@@ -1,18 +1,17 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import profile from "../../../assets/profile.jpg";
 import { DropDowns } from "./DropDowns";
 
 export function NavBarRight(props) {
+  /* to toggle the dropdown on clicking the button */
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   return (
     <div className="right">
       <button
         onClick={() => {
-          !isDropDownOpen
-            ? setIsDropDownOpen(true)
-            : setIsDropDownOpen(false);
+          !isDropDownOpen ? setIsDropDownOpen(true) : setIsDropDownOpen(false);
         }}
       >
         {props.userPicked}
@@ -20,9 +19,7 @@ export function NavBarRight(props) {
       </button>
 
       {isDropDownOpen && (
-        <DropDowns
-          setIsDropDownOpen={setIsDropDownOpen}
-        ></DropDowns>
+        <DropDowns setIsDropDownOpen={setIsDropDownOpen}></DropDowns>
       )}
 
       <div className="profile">

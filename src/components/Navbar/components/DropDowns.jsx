@@ -5,8 +5,11 @@ import { dropDown } from "../../../Data";
 
 export function DropDowns(props) {
   const appContext = useContext(AppContext);
+
+  /* to navigate to the path clicked by user */
   const navigate = useNavigate();
 
+  /* to close the dropdown on clicking outside */
   let menuRef = useRef();
   useEffect(() => {
     let handler = (e) => {

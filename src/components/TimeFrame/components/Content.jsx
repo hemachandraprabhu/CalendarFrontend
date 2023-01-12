@@ -2,10 +2,14 @@ import React from "react";
 import moment from "moment";
 
 export function Content(props) {
+  // console.log(
+  //   Math.floor(moment(props.item.endDate) - moment(props.item.startDate)) / 59e3
+  // );
+  
   return (
     <div
       onClick={() => {
-        props.appContext.setEventDetails(props.item); //id
+        props.appContext.setEventDetails(props.item);
         props.appContext.setIsDetailsModalOpen(true);
       }}
       className="content"

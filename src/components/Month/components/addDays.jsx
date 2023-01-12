@@ -1,5 +1,5 @@
 export function addDays(date, numDays) {
-  const copy = new Date(date.getTime());
-  copy.setDate(copy.getDate() + numDays);
-  return copy;
+  let currDate = new Date(date);
+  currDate.setDate(currDate.getDate() + numDays);
+  return currDate;
 }
