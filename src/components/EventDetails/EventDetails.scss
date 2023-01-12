@@ -1,11 +1,28 @@
 @import "../Variables/Variables.scss";
 
+.overlay-styles{
+    position: fixed;
+    top: 0;
+    left: 0%;
+    bottom: 0%;
+    right: 0%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+}
 .event-details-styles{
     @include modalStyles();
-    padding: 15px 20px 20px;
+    padding: 20px;
     height: fit-content;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
     .event-details-header{
-        @include justifyItemFlexEnd();
+        @include justifySpaceBetween();
+       .header-title{
+          font-size: 20px
+       }
+       .header-icons{
+        @include makeItemCentre();
         column-gap: 10px;
         .edit{
             cursor: pointer;
@@ -52,27 +69,33 @@
                 visibility: visible;
             }
             .icon-close{
-                @include tool-tip-icon()
+                @include tool-tip-icon();
+                // font-size: 24px;
             }
             &:hover .icon-close{
                 background-color: #F0F0F0;
             }
         } 
+       }
     }
     .event-details-body{
         display: flex;
         column-gap: 12px;
+        // align-items: center;
         .event-color{
             width: 13px;
             height: 13px;
-            background-color: #AA336A;
+            background-image: linear-gradient(to bottom,#d11b70,#AA336A);
             border-radius: 50%;
-            margin-top: 9px;
+            margin-top: 6px;
         }
        .event-info{
         width: 95%;
-        .event-date-time{
+        .event-title{
             font-size: 16px;
+        }
+        .event-date-time{
+            font-size: 14px;
            }
        }
     }

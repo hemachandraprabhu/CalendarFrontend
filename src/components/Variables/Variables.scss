@@ -53,15 +53,13 @@
 
 @mixin modalStyles{
     position: fixed;
-    top: 50%;
+    top: 50%; 
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #FFF;
+    background-color: white;
     z-index: 2;
     border-radius: 6px;
-    border: 1px solid #FFF;
-    // box-shadow: 0px 2px 12px #AA336A;
-    box-shadow: 0px 2px 7px grey;
+    border: 1px solid white;
     width: 400px;
     @include flexDirectionColumn();
 }

@@ -1,3 +1,4 @@
+
 export const weekday = [
   "Sunday",
   "Monday",
@@ -21,6 +22,19 @@ export const month = [
   "October",
   "November",
   "December",
+];
+
+export const dropDown = [
+  {
+    path: "/",
+    name: "Day",
+    keyword: "D",
+  },
+  {
+    path: "/month",
+    name: "Month",
+    keyword: "M",
+  },
 ];
 
 export const time = [

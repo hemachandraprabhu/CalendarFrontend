@@ -1,122 +1,160 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import "./Modal.scss";
-// import { GrFormClose } from "react-icons/gr";
+import { IoCalendarClearOutline } from "react-icons/io5";
 import { Calendar } from "react-date-range";
-import { weekday, month } from "../../Data";
-import { DateContext } from "../../App";
+import { AppContext } from "../../App";
 import TimePicker from "react-time-picker";
 import moment from "moment";
-import { WidgetContext } from "../Widget/Widget";
+import create from "../../assets/create.png";
+import { GrUpdate } from "react-icons/gr";
 
 function Modal() {
-  const dateContext = useContext(DateContext);
-  const widgetContext = useContext(WidgetContext);
+  const appContext = useContext(AppContext);
 
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
   const [title, setTitle] = useState(
-    widgetContext.eventDetails !== null
-      ? widgetContext.eventDetails.appointment
-      : ""
+    appContext.eventDetails !== null ? appContext.eventDetails.appointment : ""
   );
+
   const [startTime, setStartTime] = useState(
-    widgetContext.eventDetails !== null
-      ? moment.utc(widgetContext.eventDetails.startDate).format("HH:mm")
-      : "00:00"
+    appContext.eventDetails !== null
+      ? moment(appContext.eventDetails.startDate).format("HH:mm")
+      : moment().format("HH:mm")
   );
+
+  var c = moment().add(1, "hours");
   const [endTime, setEndTime] = useState(
-    widgetContext.eventDetails !== null
-      ? moment.utc(widgetContext.eventDetails.endDate).format("HH:mm")
-      : "1:00"
+    appContext.eventDetails !== null
+      ? moment(appContext.eventDetails.endDate).format("HH:mm")
+      : moment(c).format("HH:mm")
   );
+
+  let modalRef = useRef();
+  useEffect(() => {
+    let handler = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        setIsCalendarOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+  }, []);
+
+  let menuRef = useRef();
+  useEffect(() => {
+    let handler = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        appContext.setEventDetails(null);
+        appContext.setIsModalOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+  }, []);
 
   return createPortal(
     <>
-      <div className="modal-styles" ref={widgetContext.menuRef}>
-        {/* <div className="modal-header">
-          <GrFormClose
-            className="gr-close-icon"
-            onClick={() => {
-              setIsModalOpen(false);
-            }}
-          />
-        </div> */}
-        <div className="title">
-          <input
-            type="text"
-            placeholder="Add title"
-            className="title-input"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+      <div className="overlay-styles" />
+      <div className="modal-styles" ref={menuRef}>
+        <div className="modal-header">
+          <div className="left">
+            <b>
+              {appContext.eventDetails === null
+                ? "Create the event"
+                : "Update an event"}
+            </b>
+          </div>
+          {appContext.eventDetails != null ? (
+            <GrUpdate />
+          ) : (
+            <img src={create} alt="create.png" />
+          )}
         </div>
 
-        <div className="dt">
-          <div className="date">
-            <div className="set-date" onClick={() => setIsCalendarOpen(true)}>
-              {weekday[dateContext.date.getDay()]}, {dateContext.date.getDate()}{" "}
-              {month[dateContext.date.getMonth()]}{" "}
-              {dateContext.date.getFullYear()}
-            </div>
-          </div>
-
-          {isCalendarOpen && (
-            <Calendar
-              date={dateContext.date}
-              onChange={(userSelectedDate) => {
-                dateContext.setDate(userSelectedDate);
-                setIsCalendarOpen(false);
-              }}
-              className="select-date"
-              color="#AA336A"
-              fixedHeight={true}
+        <div className="modal-body">
+          <div className="title" tabIndex={0}>
+            <input
+              type="text"
+              placeholder="Title"
+              className="title-input"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-          )}
-
-          <div className="time">
-            <div className="choose-time">
-              Start-time:
-              <TimePicker
-                className="time-picker"
-                onChange={setStartTime}
-                value={startTime}
-                disableClock
+          </div>
+          <div className="date-time">
+            <div className="text-date">Date</div>
+            <div className="choose-date" tabIndex={0}>
+              <div className="selected-date">
+                {moment(appContext.date).format("dddd, D MMM YYYY")}
+              </div>
+              <IoCalendarClearOutline
+                className="io-cal"
+                onClick={() => setIsCalendarOpen(!isCalendarOpen)}
               />
+              {isCalendarOpen === true && (
+                <div ref={modalRef} className="date-cal">
+                  <Calendar
+                    date={appContext.date}
+                    onChange={(userSelectedDate) => {
+                      appContext.setDate(userSelectedDate);
+                      setIsCalendarOpen(false);
+                    }}
+                    className="cal"
+                    color="#AA336A"
+                    fixedHeight={true}
+                  />
+                </div>
+              )}
             </div>
+
             <div className="choose-time">
-              End-time:
-              <TimePicker
-                className="time-picker"
-                onChange={setEndTime}
-                value={endTime}
-                disableClock
-              />
+              <div className="start-time" tabIndex={0}>
+                <TimePicker
+                  className="time-picker"
+                  onChange={setStartTime}
+                  value={startTime}
+                  disableClock
+                  dropdown
+                />
+              </div>
+              <div className="end-time" tabIndex={0}>
+                <TimePicker
+                  className="time-picker"
+                  onChange={setEndTime}
+                  value={endTime}
+                  disableClock
+                  dropdown
+                />
+              </div>
             </div>
           </div>
         </div>
 
         <div className="modal-footer">
-          <button
-            className="modal-footer-close"
-            onClick={() => {
-              widgetContext.setIsModalOpen(false);
-              widgetContext.setEventDetails(null);
-            }}
-          >
-            Close
-          </button>
-          <button
-            className="modal-footer-save"
-            onClick={() => {
-              widgetContext.eventDetails == null
-                ? widgetContext.handlePost(title, startTime, endTime)
-                : widgetContext.handlePut(title, startTime, endTime);
-              widgetContext.setIsModalOpen(false);
-              widgetContext.setEventDetails(null);
-            }}
-          >
-            Save
-          </button>
+          <div className="footer-btns">
+            <button
+              type="submit"
+              className="cancel"
+              onClick={() => {
+                appContext.setIsModalOpen(false);
+                appContext.setEventDetails(null);
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="create"
+              onClick={() => {
+                appContext.eventDetails == null
+                  ? appContext.handlePost(title, startTime, endTime)
+                  : appContext.handlePut(title, startTime, endTime);
+                appContext.setIsModalOpen(false);
+                appContext.setEventDetails(null);
+              }}
+            >
+              {appContext.eventDetails === null ? "Create" : "Update"}
+            </button>
+          </div>
         </div>
       </div>
     </>,

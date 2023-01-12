@@ -5,58 +5,59 @@ import moment from "moment";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineEdit } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
-import { month, weekday } from "../../Data";
-import { WidgetContext } from "../Widget/Widget";
+import { AppContext } from "../../App";
 
 function EventDetails() {
-  const widgetContext = useContext(WidgetContext);
-  var date = new Date(widgetContext.eventDetails.startDate);
+  const appContext = useContext(AppContext);
 
-  const OVERLAY_STYLES = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 2,
-  };
   return createPortal(
     <>
       <div
-        style={OVERLAY_STYLES}
-        onClick={() => widgetContext.setDetailsPortal(false)}
+        className="overlay-styles"
+        onClick={() => {
+          appContext.setIsDetailsModalOpen(false);
+          appContext.setEventDetails(null);
+        }}
       />
       <div className="event-details-styles">
         <div className="event-details-header">
-          <div className="edit">
-            <MdOutlineEdit
-              className="icon-edit"
-              onClick={() => {
-                widgetContext.setIsModalOpen(true);
-                widgetContext.setDetailsPortal(false);
-              }}
-            />
-            <span className="span-edit">Edit event</span>
+          <div className="header-title">
+            <b>Event Details</b>
           </div>
+          <div className="header-icons">
+            <div className="edit">
+              <MdOutlineEdit
+                className="icon-edit"
+                onClick={() => {
+                  appContext.setIsModalOpen(true);
+                  appContext.setIsDetailsModalOpen(false);
+                }}
+              />
+              <span className="span-edit">Edit event</span>
+            </div>
 
-          <div className="delete">
-            <RiDeleteBin6Line
-              onClick={() => {
-                widgetContext.handleDelete(widgetContext.eventDetails.id);
-                widgetContext.setEventDetails(null);
-                widgetContext.setDetailsPortal(false);
-              }}
-              className="icon-delete"
-            />
-            <span className="span-delete">Delete event</span>
-          </div>
+            <div className="delete">
+              <RiDeleteBin6Line
+                onClick={() => {
+                  appContext.handleDelete(appContext.eventDetails.id);
+                  appContext.setEventDetails(null);
+                  appContext.setIsDetailsModalOpen(false);
+                }}
+                className="icon-delete"
+              />
+              <span className="span-delete">Delete event</span>
+            </div>
 
-          <div className="close">
-            <GrFormClose
-              onClick={() => widgetContext.setDetailsPortal(false)}
-              className="icon-close"
-            />
-            <span className="span-close">close</span>
+            <div className="close">
+              <GrFormClose
+                onClick={() => {
+                  appContext.setEventDetails(null);
+                  appContext.setIsDetailsModalOpen(false);
+                }}
+                className="icon-close"
+              />
+              <span className="span-close">close</span>
+            </div>
           </div>
         </div>
 
@@ -64,20 +65,14 @@ function EventDetails() {
           <div className="event-color"></div>
           <div className="event-info">
             <div className="event-title">
-              {widgetContext.eventDetails.appointment}
+              {appContext.eventDetails.appointment}
             </div>
             <div className="event-date-time">
-              {weekday[date.getDay()] +
-                "," +
-                date.getDate() +
-                " " +
-                month[date.getMonth()]}
-              (
-              {moment
-                .utc(widgetContext.eventDetails.startDate)
-                .format("h:mm a")}
-              -{moment.utc(widgetContext.eventDetails.endDate).format("h:mm a")}
-              )
+              {moment(appContext.eventDetails.startDate).format(
+                "Do MMMM YYYY,"
+              )}
+              ({moment(appContext.eventDetails.startDate).format("h:mm a ")}-
+              {moment(appContext.eventDetails.endDate).format(" h:mm a")})
             </div>
           </div>
         </div>

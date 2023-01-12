@@ -1,107 +1,329 @@
 @import "../Variables/Variables.scss";
 
+
+.overlay-styles{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    bottom: 0%;
+    right: 0%;
+    // background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
 .modal-styles{
-    @include modalStyles();
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 6px;
+    width: 300px;
+    background-color: white;
     padding: 30px;
-    height: 45vh;
     .modal-header{
-        text-align: right;
-        background-color: lightgrey
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .left{
+            font-size: 20px;
+        }
+        img{
+            width: 20px;
+            height: 20px;
+        }
     }
-    .title{
-        @include makeItemCentre();
-        height: 10%;
-        .title-input{
-            border: none;
-            outline: none;
+    .modal-body{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 35px;
+        padding: 30px 0px;
+        font-size: 16px;
+        .title{
             width: 100%;
-            font-size: 28px;
-            border-bottom: 2px solid #AA336A;
-        }
-    }
-    .dt{
-        @include flexDirectionColumn();
-        height: 90%;
-        .date{
-            margin-top: 8%;
-            font-size: 18px;
-            .set-date{
-                cursor: pointer;
+            padding-bottom: 3px;
+            input{
+                border: none;
+                outline: none;
+                width: 100%;
+                height: fit-content;
+                font-size: 18px;
+                font-family: 'Poppins', sans-serif;
+                border-bottom: 1px solid black;
+                &::placeholder{
+                    // opacity: 0.5;
+                    color: grey;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 21px;
+                }
+                &:focus{
+                    border-bottom: 1px solid #AA336A;
+                }
             }
+          
         }
-        .select-date{
-            position: fixed;
-            top: 62%;
-            left: 38%;
-            transform: translate(-50%, -50%);
-            background-color: #FFF;
-            padding: 1px;
-            z-index: 3;
-            border: 1px solid gainsboro;
-            width: 300px;
-            height: 250px;
-            font-size: 10px;
-            box-sizing: border-box;
-            box-shadow: 0px 2px 7px grey;
-            border-radius: 4px;
-        }
-        .rdrMonthAndYearWrapper{
-            height: 35px;
-            padding-top: 3px;
-        }
-        .rdrMonthAndYearPickers select{
-            color: black;
-            font-size: larger;
-        }
-        .rdrDayNumber span{
-            color: black
-        }
-        .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
-            color: #696969
-        }
-        .rdrDayStartPreview, .rdrDayEndPreview{
-            border: none !important;
-        }
-        .rdrDayToday .rdrDayNumber span:after{
-            background: #FF1493;
-        }
-        .rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after {
-            background: #fff;
-        } 
-        .time{
-            margin-top: 4%;
-            font-size: 18px;
-            @include flexDirectionColumn();
+        .date-time{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 20px;
+            font-size: 16px;
+            width: 100%;
+            .text-date{
+                font-size: 12px;
+                height: 12px;
+                color: grey;
+            }
+            .choose-date{
+                border: 1px solid black;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;  
+                width: 89%;
+                padding: 2.5% 5%;
+                border-radius: 6px;
+                position: relative;
+                margin: 0%;
+                .io-cal{
+                    padding-left: 5%;
+                    border-left: 1px solid black;
+                    cursor: pointer;
+                }
+                &:focus{
+                    border: 1px solid #AA336A;
+                }
+            }
+            .date-cal{
+                position: absolute;
+                top: 35px;
+                left: -1px;
+                z-index: 3;
+                .cal{
+                    border: 1px solid gainsboro;
+                    width: 300px;
+                    height: 250px;
+                    font-size: 10px;
+                    box-sizing: border-box;
+                    box-shadow: 0px 2px 7px grey;
+                    border-radius: 4px;
+                }
+                .rdrMonthAndYearWrapper{
+                    height: 35px;
+                    padding-top: 3px;
+                }
+                .rdrMonthAndYearPickers select{
+                    font-family: 'Poppins', sans-serif;
+                    color: black;
+                    font-size: larger;
+                }
+                .rdrDayNumber span{
+                    font-family: 'Poppins', sans-serif;
+                }
+                .rdrWeekDay{
+                    font-family: 'Poppins', sans-serif;
+                }
+                .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
+                    color: #696969
+                }
+                .rdrDayStartPreview, .rdrDayEndPreview{
+                    border: none !important;
+                }
+                .rdrDayToday .rdrDayNumber span:after{
+                     background: #AA336A;
+                }
+                .rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after {
+                    background: #fff;
+                } 
+            }
             .choose-time{
                 display: flex;
-                column-gap: 15px;
-                .time-picker{
-                    .react-time-picker__wrapper{
-                        border: none;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                column-gap: 20px;
+                .start-time{
+                    width: 50%;
+                    height:max-content;
+                    border: 1px solid black;
+                    border-radius: 6px;
+                    text-align: center; 
+                    padding: 2.5% 5%;
+                    .time-picker{
+                        .react-time-picker__wrapper{
+                            border: none;
+                        }
+                        .react-time-picker__button {
+                            display: none;
+                        }
                     }
-                    .react-time-picker__button {
-                        display: none;
-                      }
+                    &:focus{
+                        border: 1px solid #AA336A
+                    }
+                }
+                .end-time{
+                    @extend .start-time;
                 }
             }
         }
     }
-       
     .modal-footer{
-            @include justifyItemFlexEnd();
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .footer-btns{
+            display: flex;
+            justify-content: center;
+            align-items: center;
             column-gap: 20px;
-            height: 10%;
-            .modal-footer-close{
-                border: 1px solid #AA336A;;
-                color: #AA336A;;
+            button{
+                font-size: 14px;
                 padding: 6px 14px;
             }
-            .modal-footer-save{
-                border: 1px solid #AA336A;;
-                background-color: #AA336A;;
+            .cancel{
+                border: 1px solid #AA336A;
+                color: #AA336A;
+            }
+            .create{
+                border:1px solid #AA336A;
+                background-color: #AA336A;
                 color: white;
-                padding: 6px 14px;
             }
+        }
     }
-       
 }
+
+
+
+
+
+// .modal-styles{
+//     @include modalStyles();
+//     position: fixed;
+//     padding: 30px;
+//     height: 450px;
+//     width: 400px;
+//     .modal-header{
+//         text-align: right;
+//         background-color: lightgrey
+//     }
+//     .title{
+//         @include makeItemCentre();
+//         height: 10%;
+//         .title-input{
+//             border: none;
+//             outline: none;
+//             width: 100%;
+//             font-size: 26px;
+//             border-bottom: 2px solid #AA336A;
+//             &::placeholder{
+//                 opacity: 0.5;
+//                 color: 	grey;
+//             }
+//         }
+//     }
+//     .dt{
+//         @include flexDirectionColumn();
+//         height: 90%;
+//         position: relative;
+//         .date{
+//             margin-top: 8%;
+//             font-size: 18px;
+//             .set-date{
+//                 cursor: pointer;
+//             }
+//         }
+//         .date-cal{
+//             position: absolute;
+//             top: 45px;
+//             left: 0px;
+//             z-index: 3;
+//             .cal{
+//                 border: 1px solid gainsboro;
+//                 width: 300px;
+//                 height: 250px;
+//                 font-size: 10px;
+//                 box-sizing: border-box;
+//                 box-shadow: 0px 2px 7px grey;
+//                 border-radius: 4px;
+//             }
+//             .rdrMonthAndYearWrapper{
+//                 height: 35px;
+//                 padding-top: 3px;
+//             }
+//             .rdrMonthAndYearPickers select{
+//                 font-family: 'Poppins', sans-serif;
+//                 color: black;
+//                 font-size: larger;
+//             }
+//             .rdrDayNumber span{
+//                font-family: 'Poppins', sans-serif;
+//             }
+//             .rdrWeekDay{
+//                font-family: 'Poppins', sans-serif;
+//             }
+//             .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
+//                 color: #696969
+//             }
+//             .rdrDayStartPreview, .rdrDayEndPreview{
+//                 border: none !important;
+//             }
+//             .rdrDayToday .rdrDayNumber span:after{
+//                 background: #AA336A;
+//             }
+//             .rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after {
+//                 background: #fff;
+//             } 
+//         }
+//         .time{
+//             margin-top: 4%;
+//             font-size: 18px;
+//             @include alignItemCenter();
+//             .choose-time{
+//                 display: flex;
+//                 column-gap: 15px;
+//                 .time-picker{
+//                     .react-time-picker__wrapper{
+//                         border: none;
+//                     }
+//                     .react-time-picker__button {
+//                         display: none;
+//                       }
+//                 }
+//             }
+//         }
+//     }
+       
+//     .modal-footer{
+//             @include justifyItemFlexEnd();
+//             column-gap: 20px;
+//             height: 10%;
+//             .modal-footer-close{
+//                 border: 1px solid #AA336A;;
+//                 color: #AA336A;;
+//                 padding: 6px 14px;
+//             }
+//             .modal-footer-save{
+//                 border: 1px solid #AA336A;;
+//                 background-color: #AA336A;;
+//                 color: white;
+//                 padding: 6px 14px;
+//             }
+//     }
+       
+// }
+
+
+
+// top: 0%;
+//     left: 35%;
+//     right: 0%;
+//     animation: show 0.3s ease-out;
+//     animation-fill-mode: forwards;
+//     @keyframes show {
+//         0%{
+//             transform: translateY(0%);
+//         }
+//         100%{
+//             transform: translateY(50%)
+//         }
+//     }
