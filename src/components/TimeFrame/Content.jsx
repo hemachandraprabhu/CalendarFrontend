@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import moment from "moment";
 import { AppContext } from "../../App";
 
@@ -8,7 +8,7 @@ import { AppContext } from "../../App";
  */
 
 function Content(props) {
-const appContext = useContext(AppContext);
+  const appContext = useContext(AppContext);
   return (
     <div
       onClick={() => {
@@ -35,11 +35,15 @@ const appContext = useContext(AppContext);
             11
               ? "10px"
               : "small",
+          width: "100%",
+          display: "flex"
         }}
       >
-        {props.item.appointment} (
-        {moment(props.item.startDate).format("h:mm a ")}-
-        {moment(props.item.endDate).format(" h:mm a")})
+        <span style={{width: "87%", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}}>{props.item.appointment} </span>
+        <span style={{width: "13%", textAlign: "right"}}>
+          ({moment(props.item.startDate).format("h:mma ")}-
+          {moment(props.item.endDate).format(" h:mma")})
+        </span>
       </span>
     </div>
   );

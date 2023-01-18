@@ -39,6 +39,7 @@ export function Service(date, setEvents, setNotify) {
 
   /* perform http post operation */
   const handlePost = (eventDate, title, startTime, endTime, url) => {
+    console.log(!title.replace(/\s/g, "").length);
     startTime = moment(startTime, ["hh:mma"]).format("HH:mm");
     endTime = moment(endTime, ["hh:mma"]).format("HH:mm");
     const add = {

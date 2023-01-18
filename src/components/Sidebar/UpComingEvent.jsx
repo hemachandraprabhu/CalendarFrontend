@@ -11,7 +11,7 @@ export function UpComingEvent(props) {
       <div className="time">
         {props.userPicked === "Day"
           ? moment(props.item.startDate).format("h:mma")
-          : moment(props.item.startDate).format("Do ddd, ha")}
+          : moment(props.item.startDate).format("Do ddd, h:mma")}
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ export function DayCell({ date, events }) {
   });
 
   function myClickHandler(e) {
-    if (!e) var e = window.event;
+    if (!e) e = window.event;
     e.cancelBubble = true;
     if (e.stopPropagation) e.stopPropagation();
   }
@@ -78,7 +78,7 @@ export function DayCell({ date, events }) {
                 }}
               >
                 <div className="single-event">
-                  <span className="event-time">{moment(item.startDate).format("ha")} </span>
+                  <span className="event-time">{moment(item.startDate).format("h:mma")} </span>
                   <span className="event-name">
                     {item.appointment}
                   </span>
@@ -141,8 +141,8 @@ export function DayCell({ date, events }) {
                   key={index}
                 >
                   <div className="single-event-color"></div>
-                  <span>{moment(item.startDate).format("ha")} </span>
-                  <span>
+                  <span className="single-event-time">{moment(item.startDate).format("h:mma")} </span>
+                  <span className="single-event-appointment">
                     {item.appointment}
                   </span>
                 </div>

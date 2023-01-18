@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Notify.scss";
-import { GrFormClose } from "react-icons/gr";
 import {MdClose} from "react-icons/md"
 
 function Notify(props) {

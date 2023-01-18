@@ -40,7 +40,11 @@ function Modal(props) {
 
   const validate = () => {
     /* when all have value returns true */
-    return event.title.length && event.startTime.length && event.endTime.length;
+    return (
+      event.title.replace(/\s/g, "").length &&
+      event.startTime.length &&
+      event.endTime.length
+    );
   };
 
   /* to close the mini-calendar & time-selector-drop-down when clicked outside of it */
