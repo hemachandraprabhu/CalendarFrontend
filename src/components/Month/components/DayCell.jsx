@@ -55,6 +55,9 @@ export function DayCell({ date, events }) {
             className={`normal-date ${
               moment(date).format("YYYY MMMM D") ===
                 moment().format("YYYY MMMM D") && "add-color"
+            } ${
+              moment(date).format("YYYY MMMM") !==
+                moment(appContext.date).format("YYYY MMMM") && "grey-color"
             }`}
           >
             {date.getDate()}
@@ -74,9 +77,11 @@ export function DayCell({ date, events }) {
                   appContext.setIsDetailsModalOpen(true);
                 }}
               >
-                <div>
-                  <span>{moment(item.startDate).format("ha")} </span>
-                  <span>{item.appointment}</span>
+                <div className="single-event">
+                  <span className="event-time">{moment(item.startDate).format("ha")} </span>
+                  <span className="event-name">
+                    {item.appointment}
+                  </span>
                 </div>
               </div>
             )
@@ -122,8 +127,8 @@ export function DayCell({ date, events }) {
                 {date.getDate()}
               </div>
             </div>
-            <div>
-              {sortedAppointments.map((item) => (
+            <div className="full-events-scroll">
+              {sortedAppointments.map((item, index) => (
                 <div
                   className="full-events-event"
                   onClick={(e) => {
@@ -133,10 +138,13 @@ export function DayCell({ date, events }) {
                     appContext.setIsDetailsModalOpen(true);
                     setShowAllEvents(false);
                   }}
+                  key={index}
                 >
                   <div className="single-event-color"></div>
                   <span>{moment(item.startDate).format("ha")} </span>
-                  <span>{item.appointment}</span>
+                  <span>
+                    {item.appointment}
+                  </span>
                 </div>
               ))}
             </div>

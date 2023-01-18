@@ -16,26 +16,12 @@ export default function Month() {
     1
   );
 
-  const lastDayOfMonth = new Date(
-    appContext.date.getFullYear(),
-    appContext.date.getMonth() + 1,
-    0
-  );
-
   const firstDayOnCalendar = addDays(
     firstDayOfMonth,
     firstDayOfMonth.getDay() * -1
   );
 
-  const lastDayOnCalendar = addDays(
-    lastDayOfMonth,
-    13 - lastDayOfMonth.getDay()
-  );
-
-  const totalDays =
-    (lastDayOnCalendar - firstDayOnCalendar) / (1000 * 60 * 60 * 24) + 1;
-
-  const totalWeeks = totalDays / 7;
+  const totalWeeks = 6;
   const weeks = [];
 
   let firstDayOfWeek = firstDayOnCalendar;
@@ -52,8 +38,8 @@ export default function Month() {
     >
       <div className="month-body">
         <div className="week-row">
-          {weekday.map((dayName) => (
-            <div className="day-cell">
+          {weekday.map((dayName, index) => (
+            <div className="day-cell" key={index}>
               <div
                 className="day-cell__inner-wrap"
                 style={{
@@ -67,8 +53,8 @@ export default function Month() {
             </div>
           ))}
         </div>
-        {weeks.map((startDate) => (
-          <WeekRow startDate={startDate} events={events} />
+        {weeks.map((startDate, index) => (
+          <WeekRow startDate={startDate} events={events} key={index}/>
         ))}
       </div>
     </div>

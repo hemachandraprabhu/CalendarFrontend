@@ -18,14 +18,17 @@
 }
 
 .time-frame{
-  margin-top: 15px;
-  width: 76%;
-  position: fixed;
-  right: 0;
-  transition: 0.3s ease-out;
-  transform: translateX(0px);
-  margin: 15px 20px 0px;
-  background-color: white;
+   box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    margin: 0%;
+    margin-top: 15px;
+    padding: 0px 20px 0px 20px;
+    width: 78.5%;
+    position: fixed;
+    right: 0;
+    transition: 0.3s ease-out;
+    transform: translateX(0px);
+    background-color: white;
   .top{
     padding: 0px 0px 10px 80px;
     border-bottom: 1px solid gainsboro;
@@ -63,6 +66,7 @@
   .bottom{
     overflow-y: scroll;
     height: calc(100vh - 175px);
+    padding-right: 6px;
     .outer{
       display: flex;
       width: 100%;
@@ -83,12 +87,14 @@
           height: 15px;
         }
         .content{
+          text-overflow: ellipsis;
           cursor: pointer;
           position: absolute;
           display: flex;
           justify-content: flex-start;
           padding: 0px 10px;
-          width: 98%;
+          width: 100%;
+          box-sizing: border-box;
           z-index: 1;
           color: #FFF;
           border-radius: 8px;
@@ -109,7 +115,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            z-index: 1;
+            z-index: 2;
             left: 0;
             background: orangered;
             position: absolute;
@@ -117,9 +123,9 @@
           .curr-time-line{
             width: 100%;
             height: 0%;
-            z-index: 1;
+            z-index: 2;
             position: absolute;
-            border-top: 1px solid orangered;
+            border-top: 2px solid orangered;
           }
           &:hover .display-time{
             visibility: visible;
@@ -133,7 +139,7 @@
 .expand-time-frame{
     @extend .time-frame;
     transition: 0.3s ease-out;
-    width: 97%;
+    width: 100%;
     .bottom{
       .outer{
         .time-frame-left{
@@ -151,7 +157,7 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 /* Handle */

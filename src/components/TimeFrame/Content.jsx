@@ -1,16 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import moment from "moment";
+import { AppContext } from "../../App";
+
 /**
  * @param  {} props
  * props contains the event details for the choosen date
  */
-export function Content(props) {
 
+function Content(props) {
+const appContext = useContext(AppContext);
   return (
     <div
       onClick={() => {
-        props.appContext.setEventDetails(props.item);
-        props.appContext.setIsDetailsModalOpen(true);
+        appContext.setEventDetails(props.item);
+        appContext.setIsDetailsModalOpen(true);
       }}
       className="content"
       style={{
@@ -41,3 +44,5 @@ export function Content(props) {
     </div>
   );
 }
+
+export default Content;

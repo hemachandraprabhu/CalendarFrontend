@@ -1,0 +1,94 @@
+@import "../Variables/Variables.scss";
+.mini-cal-grid {
+  width: 300px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 4px;
+  border: 1px solid gainsboro;
+  display: flex;
+  flex-direction: column;
+  cursor: context-menu;
+  .mini-cal-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px 0px 8px;
+    box-sizing: border-box;
+    .mini-cal-header-back{
+      @include makeItemCentre();
+      font-size: 12px;
+      padding: 4px;
+      cursor: pointer;
+      border-radius: 5px;
+      background: #EFF2F7;
+      color: rgb(52, 73, 94);
+      // color: #AA336A;
+      &:hover{
+        background: #E1E7F0;
+      }
+    }
+    .mini-cal-header-date{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      font-size: 12px;
+    }
+    .mini-cal-header-forward{
+     @extend .mini-cal-header-back;
+    }
+  }
+  .mini-cal-body{
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    .mini-cal-week-row {
+      display: flex;
+      flex-wrap: wrap;
+      .mini-cal-day-cell {
+        .mini-cal-day-cell__inner-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          text-align: center;
+          width: 40px;
+          height: 30px;
+           .mini-cal-day-cell-date{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+             .mini-cal-normal-date{
+                border-radius: 50%;
+                width: 26px;
+                height: 26px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 10px;
+                &:hover{
+                  background-color: #F0F0F0;
+                  cursor: pointer;
+                }
+              }
+              .mini-cal-add-color{
+                @extend .mini-cal-normal-date;
+                background-color: #aa336a !important;
+                color: white !important;
+                &:hover{
+                  background-color: #982b5e !important;
+                  color: white !important;
+                }
+              }
+              .mini-cal-grey-color{
+                @extend .mini-cal-normal-date;
+                color: #696969 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

@@ -4,11 +4,11 @@ import {
   IoIosArrowBack,
   IoMdArrowDropdown,
 } from "react-icons/io";
-import { Calendar } from "react-date-range";
 import moment from "moment";
-import { AppContext } from "../../../App";
+import { AppContext } from "../../App";
+import MiniCalendar from "../MiniCalendar/MiniCalendar";
 
-export function NavBarCentre(props) {
+function NavBarCentre(props) {
   const appContext = useContext(AppContext);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
@@ -56,21 +56,24 @@ export function NavBarCentre(props) {
         <IoIosArrowBack
           className="prev-day-icon"
           onClick={() => {
-            props.userPicked === "Day" && handleDays(-1);
-            props.userPicked === "Month" && handleMonths(-1);
+            props.userPicked === "Day" ? handleDays(-1) : handleMonths(-1);
           }}
         />
-        <span className="prev-day-hide">Previous Day</span>
+        <span className="prev-day-hide">
+          {props.userPicked === "Day" ? "Previous Day" : "Previous Month"}
+        </span>
       </div>
+
       <div className="next-day">
         <IoIosArrowForward
           className="next-day-icon"
           onClick={() => {
-            props.userPicked === "Day" && handleDays(1);
-            props.userPicked === "Month" && handleMonths(1);
+            props.userPicked === "Day" ? handleDays(1) : handleMonths(1);
           }}
         />
-        <span className="next-day-hide">Next Day</span>
+        <span className="next-day-hide">
+          {props.userPicked === "Day" ? "Next Day" : "Next Month"}
+        </span>
       </div>
 
       <div
@@ -82,18 +85,12 @@ export function NavBarCentre(props) {
         {appContext.isMenuClicked && <IoMdArrowDropdown size={15} />}
         {isCalendarOpen && (
           <div className="date-cal" ref={menuRef}>
-            <Calendar
-              date={appContext.date}
-              onChange={(userSelectedDate) => {
-                appContext.setDate(userSelectedDate);
-              }}
-              color="#AA336A"
-              fixedHeight={true}
-              className="cal"
-            />
+            <MiniCalendar />
           </div>
         )}
       </div>
     </div>
   );
 }
+
+export default NavBarCentre;

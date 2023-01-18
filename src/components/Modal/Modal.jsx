@@ -1,46 +1,64 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { createPortal } from "react-dom";
 import "./Modal.scss";
-import { IoCalendarClearOutline } from "react-icons/io5";
-import { Calendar } from "react-date-range";
 import { AppContext } from "../../App";
-import TimePicker from "react-time-picker";
 import moment from "moment";
-import create from "../../assets/create.png";
-import { GrUpdate } from "react-icons/gr";
+import ModalHeader from "./ModalHeader";
+import { IoCalendarClearOutline } from "react-icons/io5";
+import MiniCalendar from "../MiniCalendar/MiniCalendar";
+import Time from "./Time";
 
-function Modal() {
+function Modal(props) {
   const appContext = useContext(AppContext);
 
+  /* for displaying the title, date, time */
+  const [event, setEvent] = useState({
+    title:
+      appContext.eventDetails !== null
+        ? appContext.eventDetails.appointment
+        : "",
+
+    startTime:
+      appContext.eventDetails !== null
+        ? moment(appContext.eventDetails.startDate).format("h:mm a")
+        : moment().add(1, "hours").format("h:00 a"),
+
+    endTime:
+      appContext.eventDetails !== null
+        ? moment(appContext.eventDetails.endDate).format("h:mm a")
+        : moment().add(2, "hours").format("h:00 a"),
+  });
+
+  /* to toggle the mini-calendar used for date picking */
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  const [title, setTitle] = useState(
-    appContext.eventDetails !== null ? appContext.eventDetails.appointment : ""
-  );
+  /* to toggle the time-selector drop-down */
+  const [isTimeSelectorOpen, setIsTimeSelectorOpen] = useState({
+    startTimeSelector: false,
+    endTimeSelector: false,
+  });
 
-  const [startTime, setStartTime] = useState(
-    appContext.eventDetails !== null
-      ? moment(appContext.eventDetails.startDate).format("HH:mm")
-      : moment().format("HH:mm")
-  );
+  const validate = () => {
+    /* when all have value returns true */
+    return event.title.length && event.startTime.length && event.endTime.length;
+  };
 
-  var c = moment().add(1, "hours");
-  const [endTime, setEndTime] = useState(
-    appContext.eventDetails !== null
-      ? moment(appContext.eventDetails.endDate).format("HH:mm")
-      : moment(c).format("HH:mm")
-  );
-
+  /* to close the mini-calendar & time-selector-drop-down when clicked outside of it */
   let modalRef = useRef();
   useEffect(() => {
     let handler = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         setIsCalendarOpen(false);
+        setIsTimeSelectorOpen({
+          startTimeSelector: false,
+          endTimeSelector: false,
+        });
       }
     };
     document.addEventListener("mousedown", handler);
   }, []);
 
+  /* to close the modal when clicked outside of it */
   let menuRef = useRef();
   useEffect(() => {
     let handler = (e) => {
@@ -52,24 +70,60 @@ function Modal() {
     document.addEventListener("mousedown", handler);
   }, []);
 
-  return createPortal(
+  /* to call post or put method */
+  const handleSubmit = () => {
+    /* if evenDetails is empty call post method  */
+    if (!appContext.eventDetails) {
+      if (props.userPicked === "Day") {
+        props.handlePost(
+          appContext.date,
+          event.title,
+          event.startTime,
+          event.endTime,
+          props.getByDate
+        );
+      } else {
+        props.handlePost(
+          appContext.date,
+          event.title,
+          event.startTime,
+          event.endTime,
+          props.getByMonth
+        );
+      }
+    }
+    /* if evenDetails is not empty call put method  */
+    if (appContext.eventDetails) {
+      if (props.userPicked === "Day") {
+        console.log(appContext.eventDetails.id);
+        props.handlePut(
+          appContext.eventDetails.id,
+          appContext.date,
+          event.title,
+          event.startTime,
+          event.endTime,
+          props.getByDate
+        );
+      } else {
+        props.handlePut(
+          appContext.eventDetails.id,
+          appContext.date,
+          event.title,
+          event.startTime,
+          event.endTime,
+          props.getByMonth
+        );
+      }
+    }
+    appContext.setEventDetails(null);
+    appContext.setIsModalOpen(false);
+  };
+
+  return (
     <>
-      <div className="overlay-styles" />
+      <div className="modal-overlay-styles" />
       <div className="modal-styles" ref={menuRef}>
-        <div className="modal-header">
-          <div className="left">
-            <b>
-              {appContext.eventDetails === null
-                ? "Create an event"
-                : "Update an event"}
-            </b>
-          </div>
-          {appContext.eventDetails != null ? (
-            <GrUpdate />
-          ) : (
-            <img src={create} alt="create.png" />
-          )}
-        </div>
+        <ModalHeader />
 
         <div className="modal-body">
           <div className="title" tabIndex={0}>
@@ -77,55 +131,51 @@ function Modal() {
               type="text"
               placeholder="Title"
               className="title-input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={event.title}
+              onChange={(e) =>
+                setEvent((prev) => {
+                  return { ...prev, title: e.target.value };
+                })
+              }
             />
           </div>
+
           <div className="date-time">
-            <div className="text-date">Date</div>
-            <div className="choose-date" tabIndex={0}>
-              <div className="selected-date">
-                {moment(appContext.date).format("dddd, D MMM YYYY")}
-              </div>
-              <IoCalendarClearOutline
-                className="io-cal"
-                onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-              />
-              {isCalendarOpen === true && (
-                <div ref={modalRef} className="date-cal">
-                  <Calendar
-                    date={appContext.date}
-                    onChange={(userSelectedDate) => {
-                      appContext.setDate(userSelectedDate);
-                      setIsCalendarOpen(false);
-                    }}
-                    className="cal"
-                    color="#AA336A"
-                    fixedHeight={true}
-                  />
+            <div className="date">
+              <div className="text-date">Date</div>
+              <div className="choose-date" tabIndex={0}>
+                <div className="selected-date">
+                  {moment(appContext.date).format("dddd, D MMM YYYY")}
                 </div>
-              )}
+                <IoCalendarClearOutline
+                  className="io-cal"
+                  onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                />
+                {isCalendarOpen && (
+                  <div ref={modalRef} className="date-cal">
+                    <MiniCalendar setIsCalendarOpen={setIsCalendarOpen} />
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="choose-time">
-              <div className="start-time" tabIndex={0}>
-                <TimePicker
-                  className="time-picker"
-                  onChange={setStartTime}
-                  value={startTime}
-                  disableClock
-                  dropdown
-                />
-              </div>
-              <div className="end-time" tabIndex={0}>
-                <TimePicker
-                  className="time-picker"
-                  onChange={setEndTime}
-                  value={endTime}
-                  disableClock
-                  dropdown
-                />
-              </div>
+            <div className="time">
+              <Time
+                eventTime={event.startTime}
+                setEvent={setEvent}
+                setIsTimeSelectorOpen={setIsTimeSelectorOpen}
+                timeSelector={isTimeSelectorOpen.startTimeSelector}
+                modalRef={modalRef}
+                time="Start-time"
+              />
+              <Time
+                eventTime={event.endTime}
+                setEvent={setEvent}
+                setIsTimeSelectorOpen={setIsTimeSelectorOpen}
+                timeSelector={isTimeSelectorOpen.endTimeSelector}
+                modalRef={modalRef}
+                time="End-time"
+              />
             </div>
           </div>
         </div>
@@ -133,7 +183,6 @@ function Modal() {
         <div className="modal-footer">
           <div className="footer-btns">
             <button
-              type="submit"
               className="cancel"
               onClick={() => {
                 appContext.setIsModalOpen(false);
@@ -143,22 +192,16 @@ function Modal() {
               Cancel
             </button>
             <button
-              className="create"
-              onClick={() => {
-                appContext.eventDetails == null
-                  ? appContext.handlePost(title, startTime, endTime)
-                  : appContext.handlePut(title, startTime, endTime);
-                appContext.setIsModalOpen(false);
-                appContext.setEventDetails(null);
-              }}
+              className={!validate() ? "" : "create"}
+              onClick={handleSubmit}
+              disabled={!validate()}
             >
               {appContext.eventDetails === null ? "Create" : "Update"}
             </button>
           </div>
         </div>
       </div>
-    </>,
-    document.getElementById("portal")
+    </>
   );
 }
 

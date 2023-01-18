@@ -2,7 +2,7 @@ import React from "react";
 import { DayCell } from "./DayCell";
 import { addDays } from "./addDays";
 
-export function WeekRow({ startDate, events }) {
+export function WeekRow({ startDate, setIsCalendarOpen, firstDayOfMonth }) {
   const days = [];
   let date = new Date(Number(startDate));
   for (var i = 0; i < 7; i++) {
@@ -11,9 +11,16 @@ export function WeekRow({ startDate, events }) {
   }
 
   return (
-    <div className="week-row">
+    <div className="mini-cal-week-row">
       {days.map((day, index) => {
-        return <DayCell date={day} events={events} key={index} />;
+        return (
+          <DayCell
+            date={day}
+            setIsCalendarOpen={setIsCalendarOpen}
+            firstDayOfMonth={firstDayOfMonth}
+            key={index}
+          />
+        );
       })}
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { createPortal } from "react-dom";
 import "./EventDetails.scss";
 import moment from "moment";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -7,13 +6,13 @@ import { MdOutlineEdit } from "react-icons/md";
 import { GrFormClose } from "react-icons/gr";
 import { AppContext } from "../../App";
 
-function EventDetails() {
+function EventDetails(props) {
   const appContext = useContext(AppContext);
 
-  return createPortal(
+  return (
     <>
       <div
-        className="overlay-styles"
+        className="event-details-overlay-styles"
         onClick={() => {
           appContext.setIsDetailsModalOpen(false);
           appContext.setEventDetails(null);
@@ -39,7 +38,15 @@ function EventDetails() {
             <div className="delete">
               <RiDeleteBin6Line
                 onClick={() => {
-                  appContext.handleDelete(appContext.eventDetails.id);
+                  props.userPicked === "Day"
+                    ? props.handleDelete(
+                        appContext.eventDetails.id,
+                        props.getByDate
+                      )
+                    : props.handleDelete(
+                        appContext.eventDetails.id,
+                        props.getByMonth
+                      );
                   appContext.setEventDetails(null);
                   appContext.setIsDetailsModalOpen(false);
                 }}
@@ -56,7 +63,6 @@ function EventDetails() {
                 }}
                 className="icon-close"
               />
-              <span className="span-close">close</span>
             </div>
           </div>
         </div>
@@ -77,8 +83,7 @@ function EventDetails() {
           </div>
         </div>
       </div>
-    </>,
-    document.getElementById("details")
+    </>
   );
 }
 
