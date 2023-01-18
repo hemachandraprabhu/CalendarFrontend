@@ -92,6 +92,7 @@
           position: absolute;
           display: flex;
           justify-content: flex-start;
+          text-overflow: ellipsis;
           padding: 0px 10px;
           width: 100%;
           box-sizing: border-box;
@@ -148,7 +149,7 @@
         .time-frame-right{
           width: 96%;
           .content{
-            width: 98.35%;
+            width: 100%;
           }
         }
       }
