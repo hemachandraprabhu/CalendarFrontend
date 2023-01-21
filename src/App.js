@@ -3,13 +3,14 @@ import React, { useState, createContext } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import TimeFrame from "./components/TimeFrame/TimeFrame";
+import Month from "./components/Month/Month";
 import Modal from "./components/Modal/Modal";
 import EventDetails from "./components/EventDetails/EventDetails";
-import Month from "./components/Month/Month";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BiPlusMedical } from "react-icons/bi";
 import Notify from "./components/Notify/Notify";
+import DiscardModal from "./components/DiscardModal/DiscardModal";
+import { BiPlusMedical } from "react-icons/bi";
 import { Service } from "./Service";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /*to pass the states globally as props*/
 export const AppContext = createContext();
@@ -39,6 +40,9 @@ function App() {
     message: "",
   });
 
+  /* to toggle discard modal which is used for indicating that the changes was made by user */
+  const [isDiscardOpen, setIsDiscardOpen] = useState(false);
+
   /* Service function performs all http requests */
   const {
     handlePost,
@@ -47,7 +51,12 @@ function App() {
     handleGet,
     getByDate,
     getByMonth,
-  } = Service(date, setEvents, setNotify);
+  } = Service(date, setEvents, setNotify, events);
+
+  /* condition to get datas for month */
+  const [getByMonthCondition, setByGetMonthCondition] = useState(true);
+
+  const [miniCalDateCondition, setMiniCalDateCondition] = useState(false);
 
   return (
     <BrowserRouter>
@@ -60,9 +69,16 @@ function App() {
           isModalOpen,
           setIsModalOpen,
           events,
+          eventDetails,
           setEventDetails,
           setIsDetailsModalOpen,
-          eventDetails,
+          getByMonthCondition,
+          setByGetMonthCondition,
+          miniCalDateCondition,
+          setMiniCalDateCondition,
+          isDiscardOpen,
+          setIsDiscardOpen,
+          isDetailsModalOpen,
         }}
       >
         <Routes>
@@ -80,16 +96,11 @@ function App() {
                 {isModalOpen && (
                   <Modal
                     userPicked="Day"
-                    getByDate={getByDate}
                     handlePost={handlePost}
                     handlePut={handlePut}
-                  />
-                )}
-                {isDetailsModalOpen && (
-                  <EventDetails
-                    userPicked="Day"
-                    getByDate={getByDate}
-                    handleDelete={handleDelete}
+                    isDiscardOpen={isDiscardOpen}
+                    setIsDiscardOpen={setIsDiscardOpen}
+                    setNotify={setNotify}
                   />
                 )}
               </>
@@ -109,16 +120,11 @@ function App() {
                 {isModalOpen && (
                   <Modal
                     userPicked="Month"
-                    getByMonth={getByMonth}
                     handlePost={handlePost}
                     handlePut={handlePut}
-                  />
-                )}
-                {isDetailsModalOpen && (
-                  <EventDetails
-                    userPicked="Month"
-                    getByMonth={getByMonth}
-                    handleDelete={handleDelete}
+                    isDiscardOpen={isDiscardOpen}
+                    setIsDiscardOpen={setIsDiscardOpen}
+                    setNotify={setNotify}
                   />
                 )}
               </>
@@ -131,6 +137,16 @@ function App() {
             onClick={() => setIsModalOpen(true)}
           />
         )}
+
+        {isDiscardOpen && (
+          <DiscardModal
+            setIsDiscardOpen={setIsDiscardOpen}
+            setIsModalOpen={setIsModalOpen}
+            setEventDetails={setEventDetails}
+            handleDelete={handleDelete}
+          />
+        )}
+        {isDetailsModalOpen && <EventDetails />}
         {notify.toggle && (
           <Notify
             message={notify.message}

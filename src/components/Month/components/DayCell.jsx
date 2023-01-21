@@ -43,7 +43,13 @@ export function DayCell({ date, events }) {
   }
 
   return (
-    <div className="day-cell">
+    <div
+      className="day-cell"
+      onClick={() => {
+        appContext.setIsModalOpen(true);
+        appContext.setDate(date);
+      }}
+    >
       <div className="day-cell__inner-wrap">
         <div className="day-cell-date">
           <span
@@ -73,15 +79,14 @@ export function DayCell({ date, events }) {
                 onClick={(e) => {
                   myClickHandler(e);
                   appContext.setEventDetails(item);
-                  appContext.setDate(new Date(item.startDate));
                   appContext.setIsDetailsModalOpen(true);
                 }}
               >
                 <div className="single-event">
-                  <span className="event-time">{moment(item.startDate).format("h:mma")} </span>
-                  <span className="event-name">
-                    {item.appointment}
+                  <span className="event-time">
+                    {moment(item.startDate).format("h:mma")}{" "}
                   </span>
+                  <span className="event-name">{item.appointment}</span>
                 </div>
               </div>
             )
@@ -99,56 +104,62 @@ export function DayCell({ date, events }) {
         )}
 
         {showAllEvents && (
-          <div
-            className="full-events"
-            ref={menuRef}
-            onClick={(e) => myClickHandler(e)}
-          >
+          <>
+            <div className="full-events-overlay-styles" />
             <div
-              onClick={() => {
-                setShowAllEvents(false);
-              }}
-              className="close"
+              className="full-events"
+              ref={menuRef}
+              onClick={(e) => myClickHandler(e)}
             >
-              <GrClose className="close-icon" />
-            </div>
-            <div className="full-events-date">
-              <div className="full-events-text-day">
-                {moment(date).format("ddd")}
-              </div>
               <div
-                onClick={(e) => {
-                  myClickHandler(e);
-                  appContext.setDate(date);
-                  navigate("/");
+                onClick={() => {
+                  setShowAllEvents(false);
                 }}
-                className="full-events-text-date"
+                className="close"
               >
-                {date.getDate()}
+                <GrClose className="close-icon" />
               </div>
-            </div>
-            <div className="full-events-scroll">
-              {sortedAppointments.map((item, index) => (
+
+              <div className="full-events-date">
+                <div className="full-events-text-day">
+                  {moment(date).format("ddd")}
+                </div>
                 <div
-                  className="full-events-event"
                   onClick={(e) => {
                     myClickHandler(e);
-                    appContext.setEventDetails(item);
-                    appContext.setDate(new Date(item.startDate));
-                    appContext.setIsDetailsModalOpen(true);
-                    setShowAllEvents(false);
+                    appContext.setDate(date);
+                    navigate("/");
                   }}
-                  key={index}
+                  className="full-events-text-date"
                 >
-                  <div className="single-event-color"></div>
-                  <span className="single-event-time">{moment(item.startDate).format("h:mma")} </span>
-                  <span className="single-event-appointment">
-                    {item.appointment}
-                  </span>
+                  {date.getDate()}
                 </div>
-              ))}
+              </div>
+
+              <div className="full-events-scroll">
+                {sortedAppointments.map((item, index) => (
+                  <div
+                    className="full-events-event"
+                    onClick={(e) => {
+                      myClickHandler(e);
+                      appContext.setEventDetails(item);
+                      appContext.setIsDetailsModalOpen(true);
+                      setShowAllEvents(false);
+                    }}
+                    key={index}
+                  >
+                    <div className="single-event-color" />
+                    <span className="single-event-time">
+                      {moment(item.startDate).format("h:mma")}
+                    </span>
+                    <span className="single-event-appointment">
+                      {item.appointment}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

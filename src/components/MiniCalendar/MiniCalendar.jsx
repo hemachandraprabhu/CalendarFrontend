@@ -9,7 +9,7 @@ import moment from "moment";
 import { IoCaretForwardSharp, IoCaretBackSharp } from "react-icons/io5";
 import { MdFastForward, MdFastRewind } from "react-icons/md";
 
-function MiniCalendar({ setIsCalendarOpen, userPicked }) {
+function MiniCalendar({ setIsCalendarOpen, userPicked, setEvent }) {
   const appContext = useContext(AppContext);
 
   const [miniCalDate, setMiniCalDate] = useState(appContext.date);
@@ -17,6 +17,17 @@ function MiniCalendar({ setIsCalendarOpen, userPicked }) {
   useEffect(() => {
     setMiniCalDate(appContext.date);
   }, [appContext.date, userPicked]);
+
+  useEffect(() => {
+    if (
+      appContext.miniCalDateCondition &&
+      moment(miniCalDate).format("YYYY MMMM D") !==
+        moment(appContext.date).format("YYYY MMMM D")
+    ) {
+      setMiniCalDate(appContext.date);
+      appContext.setMiniCalDateCondition(false);
+    }
+  }, [appContext.miniCalDateCondition]);
 
   const firstDayOfMonth = new Date(
     miniCalDate.getFullYear(),
@@ -37,7 +48,6 @@ function MiniCalendar({ setIsCalendarOpen, userPicked }) {
     weeks.push(firstDayOfWeek);
     firstDayOfWeek = addDays(firstDayOfWeek, 7);
   }
-
 
   /* to update the year */
   const handleYear = (year) => {
@@ -100,6 +110,8 @@ function MiniCalendar({ setIsCalendarOpen, userPicked }) {
               setIsCalendarOpen={setIsCalendarOpen}
               key={index}
               firstDayOfMonth={firstDayOfMonth}
+              userPicked={userPicked}
+              setEvent={setEvent}
             />
           ))}
         </div>

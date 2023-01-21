@@ -22,7 +22,7 @@ button{
     position: fixed;
     bottom: 30px;
     right: 35px;
-    z-index: 4;
+    z-index: 3;
     font-size: 20px;
     color: white;
     background-color: 	#AA336A;

@@ -12,7 +12,8 @@ function Navbar(props) {
   useEffect(() => {
     if (props.userPicked === "Day") {
       props.handleGet(props.getByDate);
-    } else {
+      appContext.setByGetMonthCondition(true);
+    } else if (props.userPicked === "Month" && appContext.getByMonthCondition) {
       props.handleGet(props.getByMonth);
     }
   }, [appContext.date, props.userPicked]);

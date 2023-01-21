@@ -11,21 +11,19 @@ export function SideBarFooter(props) {
       <div className="agenda">
         <div className="text-agenda">Agenda</div>
         <div className="date">
-          <em>
+          <>
             {props.userPicked === "Day"
               ? moment(appContext.date).format("Do MMM YY")
               : moment(appContext.date).format("MMM YYYY")}
-          </em>
+          </>
         </div>
       </div>
 
-      <div className="total-event">
-        Total number of events: {props.results.length}
-      </div>
+      <div className="total-event">Total Events: {props.results.length}</div>
 
       {props.results.length > 0 && (
         <div className="upcoming-event">
-          Upcoming events: {props.upComingEvent.length}
+          Upcoming Events: {props.upComingEvent.length}
         </div>
       )}
 

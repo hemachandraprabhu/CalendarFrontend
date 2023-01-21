@@ -4,8 +4,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    // background-color: rgba(0,0,0,0.5);
-    // transition: 0 0.4s ease-in-out;
 }
 
 
@@ -22,13 +20,8 @@
     box-shadow: 0px 2px 14px grey;
     padding: 30px;
     text-align: center;
-    animation: grow-modal 0.3s ease-in-out;
-    @keyframes grow-modal {
-    //   0% { opacity: .2; }
-    //   25% { opacity: .4; }
-    //   50% { opacity: .6; }
-    //   75% { opacity: .8; }
-    //   100% { opacity: .9; }
+    animation: bring-down 0.6s ease-in-out;
+    @keyframes bring-down {
         0%{
           transform: translateY(-100vh); 
         }   
@@ -54,29 +47,9 @@
             }
         }
     }
-    // .notify-close{
-    //     top:-16px;
-    //     right: -30px;
-    //     padding: 5px;
-    //     border-radius: 50%;
-    //     background-color: white;
-    //     box-shadow: 0px 2px 14px grey;
-    //     cursor: pointer;
-    //     &:hover{
-    //         background-color: rgb(213, 212, 212)
-    //     }
-    // }
 }
+
 .hide-notify-body{
-    @extend .notify-body;
-    animation-name: hide-modal 0.3s ease-in-out;
-    animation-fill-mode: forwards;
-    @keyframes hide-modal {
-        0%{
-            transform: translateY(0px); 
-        }   
-        100%{
-            transform: translateY(-100vh);
-        } 
-    }
+    transition: 0.4s ease-in-out;
+    transform: translateY(-300px);
 }

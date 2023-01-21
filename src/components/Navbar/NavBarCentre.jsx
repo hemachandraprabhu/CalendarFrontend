@@ -42,7 +42,13 @@ function NavBarCentre(props) {
     <div className="centre">
       <div className="today">
         <button
-          onClick={() => appContext.setDate(new Date())}
+          onClick={() => {
+            moment(appContext.date).format("YYYY MMMM D") !==
+              moment().format("YYYY MMMM D") && appContext.setDate(new Date());
+            console.log(appContext.miniCalDateCondition);
+            !appContext.miniCalDateCondition &&
+              appContext.setMiniCalDateCondition(true);
+          }}
           className="today-button"
         >
           Today
@@ -85,7 +91,7 @@ function NavBarCentre(props) {
         {appContext.isMenuClicked && <IoMdArrowDropdown size={15} />}
         {isCalendarOpen && (
           <div className="date-cal" ref={menuRef}>
-            <MiniCalendar />
+            <MiniCalendar userPicked={props.userPicked} />
           </div>
         )}
       </div>

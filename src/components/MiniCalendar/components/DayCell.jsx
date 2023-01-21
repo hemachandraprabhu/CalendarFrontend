@@ -2,16 +2,37 @@ import React, { useContext } from "react";
 import { AppContext } from "../../../App";
 import moment from "moment";
 
-export function DayCell({ date, setIsCalendarOpen, firstDayOfMonth }) {
+export function DayCell({
+  date,
+  setIsCalendarOpen,
+  firstDayOfMonth,
+  userPicked,
+  setEvent,
+}) {
   const appContext = useContext(AppContext);
 
+  const check = async () => {
+    moment(date).format("YYYY MMMM") !==
+    moment(appContext.date).format("YYYY MMMM")
+      ? await appContext.setByGetMonthCondition(true)
+      : await appContext.setByGetMonthCondition(false);
+  };
   return (
     <div className="mini-cal-day-cell">
       <div className="mini-cal-day-cell__inner-wrap">
         <div className="mini-cal-day-cell-date">
           <span
-            onClick={() => {
-              appContext.setDate(date);
+            onClick={async () => {
+              userPicked === "Month" && (await check());
+
+              moment(date).format("YYYY MMMM D") !==
+                moment(appContext.date).format("YYYY MMMM D") &&
+                appContext.setDate(date);
+
+              appContext.isModalOpen &&
+                setEvent((prev) => {
+                  return { ...prev, eventDate: date };
+                });
               appContext.isModalOpen && setIsCalendarOpen(false);
             }}
             className={`mini-cal-normal-date ${
@@ -42,9 +63,3 @@ export function DayCell({ date, setIsCalendarOpen, firstDayOfMonth }) {
     </div>
   );
 }
-
-// ${
-//   moment(date).format("YYYY MMMM") !==
-//     moment(appContext.date).format("YYYY MMMM") &&
-//   "mini-cal-grey-color"
-// }

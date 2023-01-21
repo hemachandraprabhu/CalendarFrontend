@@ -38,17 +38,7 @@ function EventDetails(props) {
             <div className="delete">
               <RiDeleteBin6Line
                 onClick={() => {
-                  props.userPicked === "Day"
-                    ? props.handleDelete(
-                        appContext.eventDetails.id,
-                        props.getByDate
-                      )
-                    : props.handleDelete(
-                        appContext.eventDetails.id,
-                        props.getByMonth
-                      );
-                  appContext.setEventDetails(null);
-                  appContext.setIsDetailsModalOpen(false);
+                  appContext.setIsDiscardOpen(true);
                 }}
                 className="icon-delete"
               />

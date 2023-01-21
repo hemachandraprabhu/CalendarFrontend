@@ -1,12 +1,11 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import create from "../../assets/create.png";
 import { GrUpdate } from "react-icons/gr";
 import { GrFormClose } from "react-icons/gr";
 import { AppContext } from "../../App";
 
-
-function ModalHeader() {
-const appContext = useContext(AppContext);
+function ModalHeader(props) {
+  const appContext = useContext(AppContext);
 
   return (
     <div className="modal-header">
@@ -25,8 +24,10 @@ const appContext = useContext(AppContext);
       <GrFormClose
         className="modal-close"
         onClick={() => {
-          appContext.setIsModalOpen(false);
-          appContext.setEventDetails(null);
+          props.event.title.replace(/\s/g, "").length && props.cancelClick()
+            ? props.setIsDiscardOpen(true)
+            : appContext.setIsModalOpen(false) &&
+              appContext.setEventDetails(null);
         }}
       />
     </div>

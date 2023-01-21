@@ -18,6 +18,11 @@ function Modal(props) {
         ? appContext.eventDetails.appointment
         : "",
 
+    eventDate:
+      appContext.eventDetails !== null
+        ? new Date(appContext.eventDetails.startDate)
+        : appContext.date,
+
     startTime:
       appContext.eventDetails !== null
         ? moment(appContext.eventDetails.startDate).format("h:mm a")
@@ -38,12 +43,15 @@ function Modal(props) {
     endTimeSelector: false,
   });
 
+  const [isTimeValid, setIsTimeValid] = useState(true);
+
   const validate = () => {
     /* when all have value returns true */
     return (
       event.title.replace(/\s/g, "").length &&
       event.startTime.length &&
-      event.endTime.length
+      event.endTime.length &&
+      isTimeValid
     );
   };
 
@@ -62,72 +70,93 @@ function Modal(props) {
     document.addEventListener("mousedown", handler);
   }, []);
 
-  /* to close the modal when clicked outside of it */
-  let menuRef = useRef();
-  useEffect(() => {
-    let handler = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        appContext.setEventDetails(null);
-        appContext.setIsModalOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-  }, []);
-
   /* to call post or put method */
   const handleSubmit = () => {
     /* if evenDetails is empty call post method  */
     if (!appContext.eventDetails) {
-      if (props.userPicked === "Day") {
-        props.handlePost(
-          appContext.date,
-          event.title,
-          event.startTime,
-          event.endTime,
-          props.getByDate
-        );
-      } else {
-        props.handlePost(
-          appContext.date,
-          event.title,
-          event.startTime,
-          event.endTime,
-          props.getByMonth
-        );
-      }
+      props.handlePost(
+        event.eventDate,
+        event.title,
+        event.startTime,
+        event.endTime
+      );
     }
     /* if evenDetails is not empty call put method  */
     if (appContext.eventDetails) {
-      if (props.userPicked === "Day") {
-        console.log(appContext.eventDetails.id);
+      console.log(
+        moment(event.eventDate).format("YYYY MMMM D"),
+        moment(appContext.eventDetails.startDate).format("YYYY MMMM D")
+      );
+      if (
+        event.title !== appContext.eventDetails.appointment ||
+        moment(event.eventDate).format("YYYY MMMM D") !==
+          moment(appContext.eventDetails.startDate).format("YYYY MMMM D") ||
+        event.startTime !==
+          moment(appContext.eventDetails.startDate).format("h:mm a") ||
+        event.endTime !==
+          moment(appContext.eventDetails.endDate).format("h:mm a")
+      ) {
         props.handlePut(
           appContext.eventDetails.id,
-          appContext.date,
+          event.eventDate,
           event.title,
           event.startTime,
-          event.endTime,
-          props.getByDate
+          event.endTime
         );
       } else {
-        props.handlePut(
-          appContext.eventDetails.id,
-          appContext.date,
-          event.title,
-          event.startTime,
-          event.endTime,
-          props.getByMonth
-        );
+        props.setNotify({
+          toggle: true,
+          message: "update failed since no changes were done",
+        });
       }
     }
     appContext.setEventDetails(null);
     appContext.setIsModalOpen(false);
   };
 
+  const handleClick = () => {
+    if (
+      !isCalendarOpen &&
+      (!event.title ||
+        (appContext.eventDetails !== null &&
+          event.title === appContext.eventDetails.appointment &&
+          moment(event.eventDate).format("YYYY MMMM D") ===
+            moment(appContext.eventDetails.startDate).format("YYYY MMMM D") &&
+          event.startTime ===
+            moment(appContext.eventDetails.startDate).format("h:mm a") &&
+          event.endTime ===
+            moment(appContext.eventDetails.endDate).format("h:mm a")))
+    ) {
+      appContext.setEventDetails(null);
+      appContext.setIsModalOpen(false);
+    }
+  };
+
+  const cancelClick = () => {
+    if (
+      appContext.eventDetails !== null &&
+      event.title === appContext.eventDetails.appointment &&
+      moment(event.eventDate).format("YYYY MMMM D") ===
+        moment(appContext.eventDetails.startDate).format("YYYY MMMM D") &&
+      event.startTime ===
+        moment(appContext.eventDetails.startDate).format("h:mm a") &&
+      event.endTime === moment(appContext.eventDetails.endDate).format("h:mm a")
+    ) {
+      appContext.setEventDetails(null);
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
-      <div className="modal-overlay-styles" />
-      <div className="modal-styles" ref={menuRef}>
-        <ModalHeader />
+      <div className="modal-overlay-styles" onClick={handleClick} />
+      <div className="modal-styles">
+        <ModalHeader
+          event={event}
+          setIsDiscardOpen={props.setIsDiscardOpen}
+          cancelClick={cancelClick}
+        />
 
         <div className="modal-body">
           <div className="title" tabIndex={0}>
@@ -149,7 +178,7 @@ function Modal(props) {
               <div className="text-date">Date</div>
               <div className="choose-date" tabIndex={0}>
                 <div className="selected-date">
-                  {moment(appContext.date).format("dddd, D MMM YYYY")}
+                  {moment(event.eventDate).format("dddd, D MMM YYYY")}
                 </div>
                 <IoCalendarClearOutline
                   className="io-cal"
@@ -157,7 +186,11 @@ function Modal(props) {
                 />
                 {isCalendarOpen && (
                   <div ref={modalRef} className="date-cal">
-                    <MiniCalendar setIsCalendarOpen={setIsCalendarOpen} />
+                    <MiniCalendar
+                      setIsCalendarOpen={setIsCalendarOpen}
+                      userPicked={props.userPicked}
+                      setEvent={setEvent}
+                    />
                   </div>
                 )}
               </div>
@@ -171,6 +204,8 @@ function Modal(props) {
                 timeSelector={isTimeSelectorOpen.startTimeSelector}
                 modalRef={modalRef}
                 time="Start-time"
+                event={event}
+                setIsTimeValid={setIsTimeValid}
               />
               <Time
                 eventTime={event.endTime}
@@ -179,6 +214,8 @@ function Modal(props) {
                 timeSelector={isTimeSelectorOpen.endTimeSelector}
                 modalRef={modalRef}
                 time="End-time"
+                event={event}
+                setIsTimeValid={setIsTimeValid}
               />
             </div>
           </div>
@@ -188,10 +225,12 @@ function Modal(props) {
           <div className="footer-btns">
             <button
               className="cancel"
-              onClick={() => {
-                appContext.setIsModalOpen(false);
-                appContext.setEventDetails(null);
-              }}
+              onClick={() =>
+                event.title.replace(/\s/g, "").length && cancelClick()
+                  ? props.setIsDiscardOpen(true)
+                  : (appContext.setIsModalOpen(false),
+                    appContext.eventDetails(null))
+              }
             >
               Cancel
             </button>
