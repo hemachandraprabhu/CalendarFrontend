@@ -5,11 +5,12 @@ import {
   IoMdArrowDropdown,
 } from "react-icons/io";
 import moment from "moment";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 import MiniCalendar from "../MiniCalendar/MiniCalendar";
+import { HandleDate } from "./HandleDate";
 
 function NavBarCentre(props) {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   /* to close the calendar when clicking on outside the calendar */
@@ -21,36 +22,17 @@ function NavBarCentre(props) {
       }
     };
     document.addEventListener("mousedown", handler);
-  });
+  }, []);
 
-  /* to update the date */
-  const handleDays = (day) => {
-    let currDate = new Date(appContext.date);
-    currDate.setDate(currDate.getDate() + day);
-    appContext.setDate(currDate);
-  };
-
-  /* to update the month */
-  const handleMonths = (month) => {
-    let currDate = new Date(appContext.date);
-    currDate.setDate(1);
-    currDate.setMonth(currDate.getMonth() + month);
-    appContext.setDate(currDate);
-  };
+  const { handleToday, handleDay, handleMonth } = HandleDate(
+    widgetContext,
+    props
+  );
 
   return (
     <div className="centre">
       <div className="today">
-        <button
-          onClick={() => {
-            moment(appContext.date).format("YYYY MMMM D") !==
-              moment().format("YYYY MMMM D") && appContext.setDate(new Date());
-            console.log(appContext.miniCalDateCondition);
-            !appContext.miniCalDateCondition &&
-              appContext.setMiniCalDateCondition(true);
-          }}
-          className="today-button"
-        >
+        <button onClick={handleToday} className="today-button">
           Today
         </button>
         <span className="today-hide">
@@ -60,36 +42,45 @@ function NavBarCentre(props) {
 
       <div className="prev-day">
         <IoIosArrowBack
-          className="prev-day-icon"
+          className="day-icon"
           onClick={() => {
-            props.userPicked === "Day" ? handleDays(-1) : handleMonths(-1);
+            props.userPicked === "Day" ? handleDay(-1) : handleMonth(-1);
           }}
         />
-        <span className="prev-day-hide">
+        <span className="day-hide">
           {props.userPicked === "Day" ? "Previous Day" : "Previous Month"}
         </span>
       </div>
 
       <div className="next-day">
         <IoIosArrowForward
-          className="next-day-icon"
+          className="day-icon"
           onClick={() => {
-            props.userPicked === "Day" ? handleDays(1) : handleMonths(1);
+            props.userPicked === "Day" ? handleDay(1) : handleMonth(1);
           }}
         />
-        <span className="next-day-hide">
+        <span className="day-hide">
           {props.userPicked === "Day" ? "Next Day" : "Next Month"}
         </span>
       </div>
 
       <div
-        className={`date ${appContext.isMenuClicked && "new-date"}`}
-        onClick={() => appContext.isMenuClicked && setIsCalendarOpen(true)}
+        className={`date ${widgetContext.isMenuClicked && "new-date"}`}
+        onClick={() => widgetContext.isMenuClicked && setIsCalendarOpen(true)}
       >
-        {props.userPicked === "Day" && moment(appContext.date).format("D ")}
-        {moment(appContext.date).format("MMMM YYYY")}
-        {appContext.isMenuClicked && <IoMdArrowDropdown size={15} />}
-        {isCalendarOpen && (
+        <span>
+          {props.userPicked === "Day" &&
+            moment(widgetContext.date).format("D ")}
+          {moment(widgetContext.date).format("MMMM YYYY")}
+        </span>
+        <span
+          className={`${
+            widgetContext.isMenuClicked ? "show-down-icon" : "hide-down-icon"
+          }`}
+        >
+          <IoMdArrowDropdown size={16} />
+        </span>
+        {widgetContext.isMenuClicked && isCalendarOpen && (
           <div className="date-cal" ref={menuRef}>
             <MiniCalendar userPicked={props.userPicked} />
           </div>

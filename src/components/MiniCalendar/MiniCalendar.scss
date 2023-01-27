@@ -1,6 +1,7 @@
 @import "../Variables/Variables.scss";
+
 .mini-cal-grid {
-  width: 300px;
+  width: 275px;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   border-radius: 4px;
@@ -9,7 +10,6 @@
   flex-direction: column;
   cursor: context-menu;
   .mini-cal-header{
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,13 +17,12 @@
     box-sizing: border-box;
     .mini-cal-header-back{
       @include makeItemCentre();
-      font-size: 12px;
+      font-size: 11px;
       padding: 4px;
       cursor: pointer;
       border-radius: 5px;
       background: #EFF2F7;
       color: rgb(52, 73, 94);
-      // color: #AA336A;
       &:hover{
         background: #E1E7F0;
       }
@@ -33,10 +32,11 @@
       align-items: center;
       justify-content: center;
       width: 50%;
-      font-size: 12px;
+      font-size: 13px;
     }
     .mini-cal-header-forward{
      @extend .mini-cal-header-back;
+     font-size: 11px;
     }
   }
   .mini-cal-body{
@@ -53,8 +53,8 @@
           justify-content: center;
           box-sizing: border-box;
           text-align: center;
-          width: 40px;
-          height: 30px;
+          width: 36.5px;
+          height: 28px;
            .mini-cal-day-cell-date{
               display: flex;
               justify-content: center;
@@ -91,4 +91,3 @@
       }
     }
   }
-  

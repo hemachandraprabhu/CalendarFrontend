@@ -1,34 +1,41 @@
 import React, { useContext } from "react";
 import moment from "moment";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 import { UpComingEvent } from "./UpComingEvent";
 
 export function SideBarFooter(props) {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
+
+  var results = widgetContext.events.sort(
+    (a, b) => new Date(a.startDate) - new Date(b.startDate)
+  );
+
+  const futureEvents = (item) => {
+    return moment(item.startDate).format() > moment().format();
+  };
+  var upComingEvent = results.filter(futureEvents);
 
   return (
     <div className="side-bar-footer">
       <div className="agenda">
         <div className="text-agenda">Agenda</div>
         <div className="date">
-          <>
-            {props.userPicked === "Day"
-              ? moment(appContext.date).format("Do MMM YY")
-              : moment(appContext.date).format("MMM YYYY")}
-          </>
+          {props.userPicked === "Day"
+            ? moment(widgetContext.date).format("Do MMM YY")
+            : moment(widgetContext.date).format("MMM YYYY")}
         </div>
       </div>
 
-      <div className="total-event">Total Events: {props.results.length}</div>
+      <div className="total-event">Total Events: {results.length}</div>
 
-      {props.results.length > 0 && (
+      {results.length > 0 && (
         <div className="upcoming-event">
-          Upcoming Events: {props.upComingEvent.length}
+          Upcoming Events: {upComingEvent.length}
         </div>
       )}
 
       <div className="full-events">
-        {props.upComingEvent.map((item, index) => (
+        {upComingEvent.map((item, index) => (
           <UpComingEvent
             key={index}
             userPicked={props.userPicked}

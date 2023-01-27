@@ -4,7 +4,8 @@ import { addDays } from "./addDays";
 
 export function WeekRow({ startDate, events }) {
   const days = [];
-  let date = new Date(Number(startDate));
+
+  let date = startDate;
   for (var i = 0; i < 7; i++) {
     days.push(date);
     date = addDays(date, 1);

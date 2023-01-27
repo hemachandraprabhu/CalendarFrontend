@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./DiscardModal.scss";
 import { GrFormClose } from "react-icons/gr";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 
 function DiscardModal({
   setIsDiscardOpen,
@@ -9,7 +9,7 @@ function DiscardModal({
   setEventDetails,
   handleDelete,
 }) {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
 
   return (
     <>
@@ -20,7 +20,7 @@ function DiscardModal({
       <div className="discard-modal">
         <div className="discard-header">
           <b>
-            {appContext.isDetailsModalOpen
+            {widgetContext.isDetailsModalOpen
               ? "Sure want to delete the event?"
               : "Sure want to discard the changes?"}
           </b>
@@ -31,6 +31,7 @@ function DiscardModal({
             }}
           />
         </div>
+
         <div className="discard-buttons">
           <button
             className="cancel"
@@ -43,16 +44,16 @@ function DiscardModal({
           <button
             className="discard"
             onClick={() => {
-              appContext.isDetailsModalOpen &&
-                handleDelete(appContext.eventDetails.id);
-              appContext.isDetailsModalOpen &&
-                appContext.setIsDetailsModalOpen(false);
+              widgetContext.isDetailsModalOpen &&
+                handleDelete(widgetContext.eventDetails.id);
+              widgetContext.isDetailsModalOpen &&
+                widgetContext.setIsDetailsModalOpen(false);
               setIsDiscardOpen(false);
               setIsModalOpen(false);
               setEventDetails(null);
             }}
           >
-            {appContext.isDetailsModalOpen ? "Delete" : "Discard"}
+            {widgetContext.isDetailsModalOpen ? "Delete" : "Discard"}
           </button>
         </div>
       </div>

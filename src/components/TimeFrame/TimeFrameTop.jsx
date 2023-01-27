@@ -1,21 +1,21 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import moment from "moment";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 
 function TimeFrameTop() {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
 
   return (
     <div
       className={`top ${
-        moment(appContext.date).format("MMM Do YYYY") ===
+        moment(widgetContext.date).format("MMM Do YYYY") ===
           moment().format("MMM Do YYYY") && "add-color"
       }`}
     >
       <div className="day">
-        {moment(appContext.date).format("ddd").toUpperCase()}
+        {moment(widgetContext.date).format("ddd").toUpperCase()}
       </div>
-      <div className="date">{appContext.date.getDate()}</div>
+      <div className="date">{widgetContext.date.getDate()}</div>
     </div>
   );
 }

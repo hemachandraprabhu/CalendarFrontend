@@ -1,17 +1,16 @@
 .month-grid {
-  box-sizing: border-box;
+    box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
     margin: 0%;
-    padding: 0px 20px 0px 20px;
-    width: 78.5%;
     position: fixed;
-    right: 0;
+    right: 20px;
+    left: 320px;
     transition: 0.3s ease-out;
     transform: translateX(0px);
-    height: calc(100vh - 80px);
+    // height: calc(100vh - 75px);
 
     .month-body{
       .week-row {
@@ -20,7 +19,7 @@
       }
       .day-cell {
         width: calc(100% / 7);
-        height: calc((100vh - 80px) / 7);
+        height: calc((100vh - 75px) / 7);
         position: relative;
         background-color: white;
         .day-cell__inner-wrap {
@@ -52,7 +51,7 @@
               background-color: #AA336A !important;
               color: white !important;
               &:hover{
-                background-color: #982b5e;
+                background-color: #982b5e !important;
                 color: white !important;
               }
             }
@@ -68,7 +67,6 @@
             border-radius: 6px;
             color: white;
             font-size: 10px;
-            // margin: 0px 3px 3px 3px;
             margin-bottom: 3px;
             cursor: pointer;
             width: 100%;
@@ -79,8 +77,6 @@
               align-items: center;
               column-gap: 3px;
               padding: 0px 8px;
-              .event-time{
-              }
               .event-name{
                 white-space: nowrap;
                 overflow: hidden;
@@ -190,7 +186,7 @@
 
 .extend-month-grid{
     transition: 0.3s ease-out;
-    width: 100%;
+    left: 20px;
 }
 
 .full-events-overlay-styles{

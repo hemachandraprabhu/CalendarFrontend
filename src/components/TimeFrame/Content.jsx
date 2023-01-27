@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import moment from "moment";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 
 /**
  * @param  {} props
@@ -8,16 +8,17 @@ import { AppContext } from "../../App";
  */
 
 function Content(props) {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
   return (
     <div
       onClick={() => {
-        appContext.setEventDetails(props.item);
-        appContext.setIsDetailsModalOpen(true);
+        widgetContext.setEventDetails(props.item);
+        widgetContext.setIsDetailsModalOpen(true);
       }}
       className="content"
       style={{
         height:
+        //1hr = 3.6ms/59e3 = 61.01..
           Math.floor(
             moment(props.item.endDate) - moment(props.item.startDate)
           ) / 59e3,
@@ -33,14 +34,14 @@ function Content(props) {
             ) /
               59e3 <=
             11
-              ? "10px"
+              ? "8px"
               : "small",
           width: "100%",
-          display: "flex"
+          display: "flex",
         }}
       >
-        <span style={{width: "87%", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden"}}>{props.item.appointment} </span>
-        <span style={{width: "13%", textAlign: "right"}}>
+        <span className="content-name">{props.item.appointment} </span>
+        <span className="content-time">
           ({moment(props.item.startDate).format("h:mma ")}-
           {moment(props.item.endDate).format(" h:mma")})
         </span>

@@ -1,33 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import "./MiniCalendar.scss";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 import { weekday } from "../../Data";
 import { WeekRow } from "./components/WeekRow";
 import { addDays } from "./components/addDays";
 import moment from "moment";
 import { IoCaretForwardSharp, IoCaretBackSharp } from "react-icons/io5";
 import { MdFastForward, MdFastRewind } from "react-icons/md";
+import { DayName } from "./components/DayName";
 
-function MiniCalendar({ setIsCalendarOpen, userPicked, setEvent }) {
-  const appContext = useContext(AppContext);
+function MiniCalendar({
+  setIsCalendarOpen,
+  userPicked,
+  setEvent,
+  width,
+  dateWidth,
+}) {
+  const widgetContext = useContext(WidgetContext);
 
-  const [miniCalDate, setMiniCalDate] = useState(appContext.date);
+  const [miniCalDate, setMiniCalDate] = useState(widgetContext.date);
 
   useEffect(() => {
-    setMiniCalDate(appContext.date);
-  }, [appContext.date, userPicked]);
+    setMiniCalDate(widgetContext.date);
+  }, [widgetContext.date, userPicked]);
 
   useEffect(() => {
     if (
-      appContext.miniCalDateCondition &&
+      widgetContext.miniCalDateCondition &&
       moment(miniCalDate).format("YYYY MMMM D") !==
-        moment(appContext.date).format("YYYY MMMM D")
+        moment(widgetContext.date).format("YYYY MMMM D")
     ) {
-      setMiniCalDate(appContext.date);
-      appContext.setMiniCalDateCondition(false);
+      setMiniCalDate(widgetContext.date);
+      widgetContext.setMiniCalDateCondition(false);
     }
-  }, [appContext.miniCalDateCondition]);
+  }, [widgetContext.miniCalDateCondition]);
 
   const firstDayOfMonth = new Date(
     miniCalDate.getFullYear(),
@@ -49,7 +56,7 @@ function MiniCalendar({ setIsCalendarOpen, userPicked, setEvent }) {
     firstDayOfWeek = addDays(firstDayOfWeek, 7);
   }
 
-  /* to update the year */
+  /* to update the year */ /* MOMENT */
   const handleYear = (year) => {
     var y = miniCalDate.getFullYear();
     var month = miniCalDate.getMonth();
@@ -68,42 +75,46 @@ function MiniCalendar({ setIsCalendarOpen, userPicked, setEvent }) {
 
   return (
     <>
-      <div className="mini-cal-grid">
+      <div className="mini-cal-grid" style={{ width: width }}>
         <div className="mini-cal-header">
-          <div className="mini-cal-header-back" style={{ marginRight: "18px" }}>
-            <MdFastRewind onClick={() => handleYear(-1)} size={18} />
+          <div
+            className="mini-cal-header-back"
+            style={{ marginRight: "14px" }}
+            onClick={() => handleYear(-1)}
+          >
+            <MdFastRewind size={16} />
           </div>
-          <div className="mini-cal-header-back">
-            <IoCaretBackSharp onClick={() => handleMonths(-1)} />
+          <div
+            className="mini-cal-header-back"
+            onClick={() => handleMonths(-1)}
+          >
+            <IoCaretBackSharp />
           </div>
           <div className="mini-cal-header-date">
             {moment(miniCalDate).format("MMMM  YYYY")}
           </div>
-          <div className="mini-cal-header-forward">
-            <IoCaretForwardSharp onClick={() => handleMonths(1)} />
+          <div
+            className="mini-cal-header-forward"
+            onClick={() => handleMonths(1)}
+          >
+            <IoCaretForwardSharp />
           </div>
           <div
             className="mini-cal-header-forward"
-            style={{ marginLeft: "18px" }}
+            style={{ marginLeft: "14px" }}
+            onClick={() => handleYear(1)}
           >
-            <MdFastForward onClick={() => handleYear(1)} size={18} />
+            <MdFastForward size={16} />
           </div>
         </div>
+
         <div className="mini-cal-body">
           <div className="mini-cal-week-row">
             {weekday.map((dayName, index) => (
-              <div className="mini-cal-day-cell" key={index}>
-                <div
-                  className="mini-cal-day-cell__inner-wrap"
-                  style={{
-                    color: "#696969",
-                  }}
-                >
-                  <div style={{ fontSize: "10px" }}>{dayName.slice(0, 3)}</div>
-                </div>
-              </div>
+              <DayName key={index} dayName={dayName} dateWidth={dateWidth} />
             ))}
           </div>
+
           {weeks.map((startDate, index) => (
             <WeekRow
               startDate={startDate}
@@ -112,6 +123,7 @@ function MiniCalendar({ setIsCalendarOpen, userPicked, setEvent }) {
               firstDayOfMonth={firstDayOfMonth}
               userPicked={userPicked}
               setEvent={setEvent}
+              dateWidth={dateWidth}
             />
           ))}
         </div>

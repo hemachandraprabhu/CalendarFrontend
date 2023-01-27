@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import "./Month.scss";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 import { weekday } from "../../Data";
 import { WeekRow } from "./components/WeekRow";
 import { addDays } from "./components/addDays";
+import { DayName } from "./components/DayName";
 
 export default function Month() {
-  const appContext = useContext(AppContext);
-  var events = appContext.events;
-  console.log(events);
+  const widgetContext = useContext(WidgetContext);
+  var events = widgetContext.events;
 
   const firstDayOfMonth = new Date(
-    appContext.date.getFullYear(),
-    appContext.date.getMonth(),
+    widgetContext.date.getFullYear(),
+    widgetContext.date.getMonth(),
     1
   );
 
@@ -33,28 +33,18 @@ export default function Month() {
   return (
     <div
       className={`month-grid ${
-        appContext.isMenuClicked && "extend-month-grid"
+        widgetContext.isMenuClicked && "extend-month-grid"
       }`}
     >
       <div className="month-body">
         <div className="week-row">
           {weekday.map((dayName, index) => (
-            <div className="day-cell" key={index}>
-              <div
-                className="day-cell__inner-wrap"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <div style={{ fontSize: "16px" }}>{dayName}</div>
-              </div>
-            </div>
+            <DayName key={index} dayName={dayName} />
           ))}
         </div>
+
         {weeks.map((startDate, index) => (
-          <WeekRow startDate={startDate} events={events} key={index}/>
+          <WeekRow startDate={startDate} events={events} key={index} />
         ))}
       </div>
     </div>

@@ -1,22 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from "react";
 import "./Navbar.scss";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 import NavBarLeft from "./NavBarLeft";
 import NavBarCentre from "./NavBarCentre";
 import NavBarRight from "./NavBarRight";
 
 function Navbar(props) {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
 
   useEffect(() => {
     if (props.userPicked === "Day") {
-      props.handleGet(props.getByDate);
-      appContext.setByGetMonthCondition(true);
-    } else if (props.userPicked === "Month" && appContext.getByMonthCondition) {
-      props.handleGet(props.getByMonth);
+      props.handleGet(props.getByUrl);
+      !widgetContext.getByMonthCondition &&
+        widgetContext.setGetByMonthCondition(true);
     }
-  }, [appContext.date, props.userPicked]);
+    if (props.userPicked === "Month" && widgetContext.getByMonthCondition) {
+      props.handleGet(props.getByUrl);
+    }
+  }, [widgetContext.date, props.userPicked]);
 
   return (
     <div className="nav-bar">

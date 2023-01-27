@@ -1,13 +1,13 @@
 @import "../Variables/Variables.scss";
 
 .nav-bar{
-    height: 80px;
     margin: 0px 20px;
     @include justifySpaceBetween();
     border-bottom: 1px solid gainsboro;
-        .left{
-        @include alignItemCenter();
-        width: 30%;
+    height: 75px;
+    .left{
+        @include makeItemCentre();
+        width: fit-content;
         .menu-icon{
             font-size: 30px;
             margin-right: 20px;
@@ -18,7 +18,7 @@
             @extend .menu-icon;
             background-color: #AA336A;
             color: white;
-            border-radius: 6px;
+            border-radius: 4px;
         }
         span{
             font-size: 30px;
@@ -26,10 +26,12 @@
     }
     .centre{
         display: flex;
-        margin-left: 15%;
-        width: 40%;
-        column-gap: 20px;
+        justify-content: center;
+        width: 100%;
+        column-gap: 10px;
+        margin-left: 20px;
         .today{
+            width: 75px;
             position: relative;
             @include makeItemCentre();
             .today-hide{
@@ -43,45 +45,40 @@
             }
         }
         .prev-day{
+            width: 28px;
             position: relative;
             @include makeItemCentre();
-            .prev-day-hide{
+            .day-hide{
                @include tool-tip();
             }
-            &:hover .prev-day-hide{
+            &:hover .day-hide{
                 visibility: visible;
             }
-            .prev-day-icon{
+            .day-icon{
                 @include tool-tip-icon();
                 cursor: pointer;
             }
-            &:hover .prev-day-icon{
+            &:hover .day-icon{
                 background-color: #F0F0F0;
             }
         }
         .next-day{
-            position: relative;
-            @include makeItemCentre();
-            .next-day-hide{
-               @include tool-tip();
-            }
-            &:hover .next-day-hide{
-                visibility: visible;
-            }
-            .next-day-icon{
-                @include tool-tip-icon();
-                @include makeItemCentre();
-                cursor: pointer;
-            }
-            &:hover .next-day-icon{
-                background-color: #F0F0F0;
-            }
+            @extend .prev-day;
         }
         .date{
+            width: 220px;
             @include makeItemCentre();
             position: relative;
-            padding: 0px 12px;
+            padding: 0px 0px 0px 0px;
             border-radius: 4px;
+            .show-down-icon{
+                @include makeItemCentre();
+                width: 20px;
+            }
+            .hide-down-icon{
+                width: 20px;
+                visibility: hidden;
+            }
             .date-cal{
                 position: absolute;
                 top: 0px;
@@ -90,45 +87,9 @@
                 box-shadow: 0px 2px 7px grey;
                 border-radius: 4px;
                 background: white;
-                .cal{
-                    border: 1px solid gainsboro;
-                    width: 300px;
-                    height: 250px;
-                    font-size: 10px;
-                    box-sizing: border-box;
-                    box-shadow: 0px 2px 7px grey;
-                    border-radius: 4px;
-                }
-                .rdrMonthAndYearWrapper{
-                    height: 35px;
-                    padding-top: 3px;
-                }
-                .rdrMonthAndYearPickers select{
-                    font-family: 'Poppins', sans-serif;
-                    color: black;
-                    font-size: larger;
-                }
-                .rdrDayNumber span{
-                    font-family: 'Poppins', sans-serif;
-                }
-                .rdrWeekDay{
-                   font-family: 'Poppins', sans-serif;
-                }
-                .rdrWeekDay, .rdrDayPassive .rdrDayNumber span{
-                    color: #696969
-                }
-                .rdrDayStartPreview, .rdrDayEndPreview{
-                    border: none !important;
-                }
-                .rdrDayToday .rdrDayNumber span:after{
-                    background: #AA336A;
-                }
-                .rdrDayToday:not(.rdrDayPassive) .rdrSelected ~ .rdrDayNumber span:after {
-                    background: #fff;
-                } 
             }
         }
-        .new-date{
+        .new-date {
             @extend .date;
             cursor: pointer;
             &:hover{
@@ -138,7 +99,7 @@
     }
     .right{
         @include justifyItemFlexEnd();           
-        width: 30%;
+        width: fit-content;
         position: relative;
         button{
             margin-right: 15px;
@@ -155,7 +116,6 @@
             box-shadow: 0px 2px 7px grey;
             font-size: 16px;
             z-index: 2;
-            padding: 8px 0px;
             div{
                 padding: 5px 6px;
                 display: flex;align-items: center;justify-content: space-between;column-gap: 20px;
@@ -183,6 +143,7 @@
             &:hover .profile-hide{
                 visibility: visible;
             }
+            
         }
     }
 }

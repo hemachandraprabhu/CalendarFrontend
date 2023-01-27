@@ -2,9 +2,18 @@ import React from "react";
 import { DayCell } from "./DayCell";
 import { addDays } from "./addDays";
 
-export function WeekRow({ startDate, setIsCalendarOpen, firstDayOfMonth, userPicked, setEvent }) {
+export function WeekRow({
+  startDate,
+  setIsCalendarOpen,
+  firstDayOfMonth,
+  userPicked,
+  setEvent,
+  dateWidth,
+}) {
+
   const days = [];
-  let date = new Date(Number(startDate));
+
+  let date = startDate;
   for (var i = 0; i < 7; i++) {
     days.push(date);
     date = addDays(date, 1);
@@ -21,6 +30,7 @@ export function WeekRow({ startDate, setIsCalendarOpen, firstDayOfMonth, userPic
             userPicked={userPicked}
             setEvent={setEvent}
             key={index}
+            dateWidth={dateWidth}
           />
         );
       })}

@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import { FiMenu } from "react-icons/fi";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 
 function NavBarLeft() {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
 
   return (
     <div className="left">
       <FiMenu
         className={`menu-icon ${
-          appContext.isMenuClicked && "menu-icon-clicked"
+          widgetContext.isMenuClicked && "menu-icon-clicked"
         }`}
         onClick={() => {
-          appContext.setIsMenuClicked(!appContext.isMenuClicked);
+          widgetContext.setIsMenuClicked(!widgetContext.isMenuClicked);
         }}
       />
       <span>Calendar</span>
@@ -21,5 +21,3 @@ function NavBarLeft() {
 }
 
 export default NavBarLeft;
-
-

@@ -4,9 +4,9 @@
   @include tool-tip();
     left: 38%;
     bottom: 0%;
-   top:auto;
+    top:auto;
   &::after{
-    content: "";
+  content: "";
   position: absolute;
   top: 100%;
   left: 50%;
@@ -20,15 +20,13 @@
 .time-frame{
    box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    margin: 0%;
-    margin-top: 15px;
-    padding: 0px 20px 0px 20px;
-    width: 78.5%;
+    margin: 15px 0px 0px 0px;
     position: fixed;
-    right: 0;
+    right: 20px;
+    left: 320px;
     transition: 0.3s ease-out;
     transform: translateX(0px);
-    background-color: white;
+    height: calc(100vh - 75px);
   .top{
     padding: 0px 0px 10px 80px;
     border-bottom: 1px solid gainsboro;
@@ -36,7 +34,6 @@
     justify-content: center;
     align-items: flex-start;
     .day{
-      // color: #AA336A;
       border-radius: 50%;
       @include makeItemCentre();
       width: 45px;
@@ -44,8 +41,6 @@
       cursor:auto;
     }
     .date{
-      // background-color: #AA336A;
-      // color: white;  
       border-radius: 50%;
       width: 45px;
       height: 45px;
@@ -65,14 +60,14 @@
   }
   .bottom{
     overflow-y: scroll;
-    height: calc(100vh - 175px);
-    padding-right: 6px;
+    height: calc(100vh - 170px);
+    padding-right: 4px;
     .outer{
       display: flex;
       width: 100%;
       min-height: 50px;
       .time-frame-left{
-          width: 5%;
+          width: 58px;
           font-size: 14px;
           border-right: 1px solid gainsboro;
           border-top: 1px solid gainsboro;
@@ -82,24 +77,31 @@
         position: relative;
         height: 60px;
         border-top: 1px solid gainsboro;
-       
         .h_twenty{
           height: 15px;
         }
         .content{
-          text-overflow: ellipsis;
+          box-sizing: border-box;
           cursor: pointer;
           position: absolute;
           display: flex;
           justify-content: flex-start;
-          text-overflow: ellipsis;
-          padding: 0px 10px;
+          padding: 0px 6px;
           width: 100%;
-          box-sizing: border-box;
           z-index: 1;
           color: #FFF;
           border-radius: 4px;
           background-image: linear-gradient(to bottom,#d11b70,#AA336A);
+            .content-name{
+                width: 87%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .content-time{
+                 width: 13%;
+                 text-align: right;
+            }
         }
         .curr-time{
           position: relative;
@@ -140,35 +142,18 @@
 .expand-time-frame{
     @extend .time-frame;
     transition: 0.3s ease-out;
-    width: 100%;
+    left: 20px;
     .bottom{
       .outer{
         .time-frame-left{
-          width: 4%;
+          width: 58px;
         }
         .time-frame-right{
           width: 96%;
-          .content{
+          .content{ 
             width: 100%;
           }
         }
       }
     }
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: lightgray; 
-  border-radius: 4px;
-  padding: 0px 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: grey; 
 }

@@ -17,7 +17,7 @@ function NavBarRight(props) {
       }
     };
     document.addEventListener("mousedown", handler);
-  });
+  },[]);
 
   return (
     <div className="right">

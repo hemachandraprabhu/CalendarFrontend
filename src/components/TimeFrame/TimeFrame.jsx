@@ -1,23 +1,23 @@
 import React, { useContext } from "react";
 import "./TimeFrame.scss";
 import { time } from "../../Data";
-import { AppContext } from "../../App";
+import { WidgetContext } from "../Widget";
 import TimeFrameTop from "./TimeFrameTop";
 import TimeFrameBottom from "./TimeFrameBottom";
 
 function TimeFrame() {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
 
   return (
     <div
       className={`time-frame ${
-        appContext.isMenuClicked && "expand-time-frame"
+        widgetContext.isMenuClicked && "expand-time-frame"
       }`}
     >
       <TimeFrameTop />
       <div className="bottom">
-        {time.map((t) => (
-          <TimeFrameBottom key={t.id} t={t} />
+        {time.map((obj) => (
+          <TimeFrameBottom key={obj.id} obj={obj} />
         ))}
       </div>
     </div>

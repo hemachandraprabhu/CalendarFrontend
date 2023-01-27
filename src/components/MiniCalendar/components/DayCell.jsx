@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AppContext } from "../../../App";
+import { WidgetContext } from "../../Widget";
 import moment from "moment";
 
 export function DayCell({
@@ -8,32 +8,36 @@ export function DayCell({
   firstDayOfMonth,
   userPicked,
   setEvent,
+  dateWidth,
 }) {
-  const appContext = useContext(AppContext);
+  const widgetContext = useContext(WidgetContext);
 
-  const check = async () => {
+  const check = () => {
     moment(date).format("YYYY MMMM") !==
-    moment(appContext.date).format("YYYY MMMM")
-      ? await appContext.setByGetMonthCondition(true)
-      : await appContext.setByGetMonthCondition(false);
+    moment(widgetContext.date).format("YYYY MMMM")
+      ? widgetContext.setGetByMonthCondition(true)
+      : widgetContext.setGetByMonthCondition(false);
   };
   return (
     <div className="mini-cal-day-cell">
-      <div className="mini-cal-day-cell__inner-wrap">
+      <div
+        className="mini-cal-day-cell__inner-wrap"
+        style={{ width: dateWidth }}
+      >
         <div className="mini-cal-day-cell-date">
           <span
-            onClick={async () => {
-              userPicked === "Month" && (await check());
+            onClick={() => {
+              userPicked === "Month" && (check());
 
               moment(date).format("YYYY MMMM D") !==
-                moment(appContext.date).format("YYYY MMMM D") &&
-                appContext.setDate(date);
+                moment(widgetContext.date).format("YYYY MMMM D") &&
+                widgetContext.setDate(date);
 
-              appContext.isModalOpen &&
+              widgetContext.isModalOpen &&
                 setEvent((prev) => {
                   return { ...prev, eventDate: date };
                 });
-              appContext.isModalOpen && setIsCalendarOpen(false);
+              widgetContext.isModalOpen && setIsCalendarOpen(false);
             }}
             className={`mini-cal-normal-date ${
               moment(date).format("YYYY MMMM D") ===
@@ -46,12 +50,12 @@ export function DayCell({
             style={{
               backgroundColor:
                 moment(date).format("D MMM YYYY") ===
-                moment(appContext.date).format("D MMM YYYY")
+                moment(widgetContext.date).format("D MMM YYYY")
                   ? "pink"
                   : "",
               color:
                 moment(date).format("D MMM YYYY") ===
-                moment(appContext.date).format("D MMM YYYY")
+                moment(widgetContext.date).format("D MMM YYYY")
                   ? "#aa336a"
                   : "black",
             }}
