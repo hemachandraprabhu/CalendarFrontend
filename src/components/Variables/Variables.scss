@@ -1,0 +1,65 @@
+@mixin makeItemCentre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin alignItemCenter{
+    display: flex;
+    align-items: center;
+}
+
+@mixin justifyItemFlexStart{
+    @include alignItemCenter();
+    justify-content: flex-start;
+}
+
+@mixin justifyItemFlexEnd{
+    @include alignItemCenter();
+    justify-content: flex-end;
+}
+
+@mixin justifySpaceBetween{
+    @include alignItemCenter();
+    justify-content: space-between;
+}
+
+@mixin flexDirectionColumn{
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin tool-tip{
+    visibility: hidden;
+    position: absolute;
+    text-align: center;
+    padding: 5px 0;
+    z-index: 4;
+    top: 120%;
+    right: 0%;
+    margin-right: -20px;
+    font-size: 12px;
+    background-color: grey;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 6px;
+    width: max-content;
+}
+
+@mixin tool-tip-icon{
+    border-radius: 50%;
+    padding: 4px;
+}
+
+@mixin modalStyles{
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 2;
+    border-radius: 6px;
+    border: 1px solid white;
+    width: 400px;
+    @include flexDirectionColumn();
+}

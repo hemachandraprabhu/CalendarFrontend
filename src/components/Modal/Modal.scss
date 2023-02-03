@@ -1,0 +1,222 @@
+@import "../Variables/Variables.scss";
+
+
+.modal-overlay-styles{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    bottom: 0%;
+    right: 0%;
+    background: rgba(0,0,0,0.7);
+    z-index: 4;
+}
+
+.modal-styles{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    border-radius: 6px;
+    border: 1px solid gainsboro;
+    width: 300px;
+    background-color: white;
+    padding: 30px;
+    .modal-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        .left{
+            font-size: 20px;
+        }
+        img{
+            width: 20px;
+            height: 20px;
+        }
+        .modal-close{
+            position: absolute;
+            top:-48px;
+            right: -60.5px;
+            padding: 5px;
+            border-radius: 50%;
+            background-color: white;
+            cursor: pointer;
+            &:hover{
+                background-color: rgb(213, 212, 212)
+            }
+        }
+    }
+    .modal-body{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 20px;
+        padding: 30px 0px;
+        font-size: 16px;
+        .title{
+            width: 100%;
+            padding-bottom: 3px;
+            input{
+                box-sizing: border-box;
+                border: none;
+                outline: none;
+                width: 100%;
+                height: fit-content;
+                font-size: 18px;
+                font-family: 'Poppins', sans-serif;
+                border-bottom: 1px solid black;
+                &::placeholder{
+                    color: grey;
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 21px;
+                }
+                &:focus{
+                    border-bottom: 1px solid #AA336A;
+                }
+            }
+          
+        }
+        .date-time{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 20px;
+            font-size: 16px;
+            width: 100%;
+           .date{
+            width: 100%;
+            .text-date{
+                font-size: 12px;
+                color: grey;
+                padding-left: 4px;
+            }
+            .choose-date{
+                border: 1px solid black;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;  
+                padding: 2.5% 5%;
+                border-radius: 6px;
+                position: relative;
+                margin: 0%;
+                .io-cal{
+                    padding-left: 5%;
+                    border-left: 1px solid black;
+                    cursor: pointer;
+                }
+                &:focus{
+                    border: 1px solid #AA336A;
+                }
+            }
+            .date-cal{
+                position: absolute;
+                top: 41px;
+                left: -0.5px;
+                width: 300px;
+                z-index: 3;
+                box-shadow: 0px 2px 7px grey;
+                border-radius: 4px;
+                background-color: white;
+            }
+           }
+            .time{
+                font-family: 'Poppins', sans-serif;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                column-gap: 15px;
+                .start-time{
+                 box-sizing: border-box;
+                 position: relative;
+                    .text-time{
+                        font-size: 12px;
+                        color: grey;
+                        padding-left: 4px;
+                    }
+                    .time-input{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        border: 1px solid black;
+                        padding: 3.5% 5%;
+                        border-radius: 6px;
+                        height: max-content;
+                        input{
+                            font-family: 'Poppins', sans-serif;
+                            font-size: 16px;
+                            width: 80%;
+                            box-sizing: border-box;
+                            border: none;
+                            &:focus{
+                                outline: none;
+                            }
+                            &::placeholder{
+                                font-size: 14px;
+                                color: grey;
+                            }
+                        }
+                        .down-icon{
+                            width: 20%;
+                            cursor: pointer;
+                            &:focus {
+                              .time-input{
+                                border: 1px solid #AA336A;
+                              }
+                            }
+                        }
+                        &:focus{
+                            border: 1px solid #AA336A;
+                        }
+                    }
+                    .time-selector-dropdown{
+                        top: 60px;
+                        position: absolute;
+                        height: 180px;
+                        width: 142px;
+                        overflow-y: scroll;
+                        background-color: white;
+                        border-radius: 6px;
+                        border: 1px solid gainsboro;
+                        box-shadow: 0px 2px 7px grey;
+                        .dropdown-value{
+                            padding: 6px;
+                            cursor: pointer;
+                            &:hover{
+                                background-color: gainsboro
+                            }
+                        }
+                    }
+                    
+                } 
+                .end-time{
+                   @extend .start-time;
+                }
+            }
+        }
+    }
+    .modal-footer{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .footer-btns{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            column-gap: 20px;
+            button{
+                font-size: 14px;
+                padding: 6px 14px;
+            }
+            .cancel{
+                border: 1px solid #AA336A;
+                color: #AA336A;
+            }
+            .create-update{
+                border:1px solid #AA336A;
+                background-color: #AA336A;
+                color: white;
+            }
+        }
+    }
+}

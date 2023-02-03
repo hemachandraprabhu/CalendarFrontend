@@ -1,0 +1,106 @@
+@import "../Variables/Variables.scss";
+
+.event-details-overlay-styles{
+    position: fixed;
+    top: 0;
+    left: 0%;
+    bottom: 0%;
+    right: 0%;
+    background: rgba(0,0,0,0.7);
+    z-index: 3;
+}
+.event-details-styles{
+    @include modalStyles();
+    padding: 20px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    max-height: 250px;
+    z-index: 4;
+    .event-details-header{
+        @include justifySpaceBetween();
+       .header-title{
+          font-size: 20px;
+          padding-left: 4px;
+       }
+       .header-icons{
+        @include makeItemCentre();
+        .edit{
+            cursor: pointer;
+            position: relative;
+            margin-right: 10px;
+            .span-edit{
+               @include tool-tip();
+               top: 80%;
+            }
+            &:hover .span-edit{
+                visibility: visible;
+            }
+            .icon-edit{
+                @include tool-tip-icon()
+            }
+            &:hover .icon-edit{
+                background-color: #F0F0F0;
+            }
+        }  
+        .delete{
+            cursor: pointer;
+            position: relative;
+            .span-delete{
+               @include tool-tip();
+               top: 80%;
+            }
+            &:hover .span-delete{
+                visibility: visible;
+            }
+            .icon-delete{
+                @include tool-tip-icon()
+            }
+            &:hover .icon-delete{
+                background-color: #F0F0F0;
+            }
+        } 
+        .close{
+            position: relative;
+            .icon-close{
+                cursor: pointer;
+                position: absolute;
+                top:-56px;
+                right: -51px;
+                padding: 5px;
+                border-radius: 50%;
+                background-color: white;
+                cursor: pointer;
+                &:hover{
+                    background-color: rgb(213, 212, 212)
+                }
+            }
+        } 
+    }
+    }
+    .event-details-body{
+        display: flex;
+        column-gap: 8px;
+        overflow-y: scroll;
+        padding: 0px 4px;
+        .event-color{
+            width: 13px;
+            height: 13px;
+            background-image: linear-gradient(to bottom,#d11b70,#AA336A);
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+       .event-info{
+        width: 93%;
+        word-wrap: break-word;
+        .event-title{
+            font-size: 16px;
+        }
+        .event-date-time{
+            font-size: 14px;
+            color: #AA336A;
+        }
+        }
+    }
+}

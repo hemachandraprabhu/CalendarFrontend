@@ -1,0 +1,112 @@
+@import "../Variables/Variables.scss";
+
+.side-bar{
+    box-sizing: border-box;
+    width: 300px;
+    position: fixed;
+    left: 0;
+    @include flexDirectionColumn();
+    transition: 0.3s ease-out;
+    transform: translateX(0px);
+    row-gap: 32.38px;
+    padding: 15px 0px 0px 20px;
+    background-color: white; 
+    height: calc(100vh - 75px);
+    .side-bar-top{
+        width: 100%;
+        .side-bar-create-button{
+            border-radius: 22px;
+            padding: 8px 18px;
+            .sidebar-create-icon{
+                color: white;
+                background-color: 	#AA336A;
+                border-radius: 50%;
+                padding: 5px;
+            }
+            span{
+                margin: 0px 8px;
+            }
+            &:hover{
+                background-color: #F0f0f0;
+            }
+        }
+    }
+    .side-bar-bottom{
+        width: 100%;
+        overflow: hidden;
+        height: calc(100vh - 170px);
+        padding-right: 6px;
+        &:hover{
+          overflow-y: scroll;
+        }
+        .side-bar-footer{
+            width: 275px;
+            box-sizing: border-box;
+            margin-top: 20px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            .agenda{
+                display: flex;
+                flex-direction: column;
+                
+                .text-agenda{
+                    font-size: 16px;
+                }
+                .date{
+                    font-size: 14px;
+                    color: #AA336A;
+                }
+            }
+            .total-event{
+                font-size: 14px;
+            }
+            .upcoming-event{
+               font-size: 14px;
+            }
+            .full-events{
+                font-size: 14px;
+                display: flex;
+                flex-direction: column;
+                row-gap: 5px;
+                .event{
+                    border-radius: 4px;
+                    border: 1px solid gainsboro;
+                    padding: 6px;
+                    display: flex;
+                    flex-direction: column;   
+                    .name{
+                        box-sizing: border-box;
+                        display: flex;
+                        justify-content: flex-start;
+                        column-gap: 5px;
+                        width: 100%;
+                        .event-color{
+                            width: 20%;
+                            margin-top: 5px;
+                            width: 12px;
+                            height: 12px;
+                            background-image: linear-gradient(to bottom,#d11b70,#AA336A);
+                            border-radius: 50%;
+                        }
+                        .event-detail{
+                            width: 90%;
+                            word-wrap: break-word;
+                        }
+                    }
+                    .time{
+                        padding-left: 18px;
+                        font-size: 12px;
+                        color: #AA336A;
+                    }
+                }
+            }
+        }
+    }
+}
+.hide-side-bar{
+    @extend .side-bar;
+    transition: 0.3s ease-out;
+    transform: translateX(-331px);
+}
